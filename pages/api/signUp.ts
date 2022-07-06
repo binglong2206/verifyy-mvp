@@ -22,17 +22,24 @@ export default async function handler(
       const user = await User.findOneBy({
         firstName: username,
       });
-      if (!user) throw new Error("wrong username or password");
+      if (user) throw new Error("user already exist");
       // const passwordCheck = await bcrypt.compare(password, "hasedpassword");
       // if (!passwordCheck) throw new Error("wrong username or password");
 
+      const newUser = await new User();
+      newUser.firstName = username;
+      bcrypt.hash(password, 10, (err, res) => {
+        newUser.lastName = res;
+      });
+      await AppDataSource.manager.save(newUser);
+
       // Sign JWT Token
       const accessToken = jwt.sign(
-        { id: user.id, username: user.firstName },
+        { id: newUser.id, username: newUser.firstName },
         process.env.JWT_ACCESS_SECRET as string
       );
       const refreshToken = jwt.sign(
-        { sessionId: 0, id: user.id, username: user.firstName },
+        { sessionId: 0, id: newUser.id, username: newUser.firstName },
         process.env.JWT_REFRESH_SECRET as string
       );
 

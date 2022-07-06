@@ -4,21 +4,20 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { getCookies } from "cookies-next";
 import { useEffect, useState } from "react";
+import Router from "next/router";
 const axios = require("axios").default;
 
 const Login: NextPage = () => {
   const formSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // this stops it from submitting the form
-    await fetch("api/login2", {
+    await fetch("api/login", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify({ username: "Timber", password: "123" }),
       credentials: "include",
-    })
-      .then((r) => r.json())
-      .then((data) => console.log(data));
+    }).then(() => Router.push("/dashboard"));
   };
 
   return (
