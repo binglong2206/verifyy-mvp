@@ -1,16 +1,37 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Generated,
+} from "typeorm";
 
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: "character varying" })
-  firstName: string;
+  @Column()
+  @Generated("uuid")
+  uuid: string;
+
+  @CreateDateColumn()
+  created: Date;
+
+  @UpdateDateColumn()
+  updated: Date;
 
   @Column({ type: "character varying" })
-  lastName: string;
+  firstname: string;
 
-  @Column({ type: "integer", nullable: true })
-  age: number | null;
+  @Column({ type: "character varying", unique: true })
+  username: string;
+
+  @Column({ type: "character varying" })
+  password: string;
+
+  @Column({ type: "character varying", unique: true })
+  email: string;
 }
