@@ -15,21 +15,6 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  res.setHeader("Set-Cookie", [
-    serialize("1111", accessToken, {
-      httpOnly: true,
-      sameSite: true,
-      secure: true,
-      path: "/",
-    }),
-    serialize("2222", accessToken, {
-      httpOnly: true,
-      sameSite: true,
-      secure: true,
-      path: "/",
-    }),
-  ]);
-  console.log(process.env.DB);
-  console.log(req.cookies);
+  console.log("sadasd", req.cookies);
   res.status(200).json({ name: "John Doe" });
 }
