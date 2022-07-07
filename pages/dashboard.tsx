@@ -18,7 +18,7 @@ interface HomeProps {
 
 const Home: NextPage<HomeProps> = ({ id, username }) => {
   const logout = async () => {
-    const res = await fetch("api/logout", {
+    const res = await fetch("api/logoutAPI", {
       method: "DELETE",
       credentials: "include",
     });

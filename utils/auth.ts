@@ -42,6 +42,8 @@ const authenticateJWT = async (
       refreshToken,
       process.env.JWT_REFRESH_SECRET as string
     ) as RefreshLoad;
+
+    console.log(access);
     return {
       props: {
         id: access.id,

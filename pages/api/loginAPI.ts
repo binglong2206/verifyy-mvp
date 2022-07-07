@@ -17,22 +17,25 @@ export default async function handler(
 
     await AppDataSource.initialize().then(async () => {
       const { username, password } = req.body;
-
+      console.log(username, password);
       // Verify username & password
       const user = await User.findOneBy({
-        firstName: username,
+        username: username,
       });
-      if (!user) throw new Error("wrong username or password");
-      // const passwordCheck = await bcrypt.compare(password, "hasedpassword");
-      // if (!passwordCheck) throw new Error("wrong username or password");
+      if (!user) throw new Error("wrong username");
+      const passwordCheck = await bcrypt.compare(
+        password,
+        user.hashed_password
+      );
+      if (!passwordCheck) throw Error("wrong password");
 
       // Sign JWT Token
       const accessToken = jwt.sign(
-        { id: user.id, username: user.firstName },
+        { id: user.uuid, username: user.username },
         process.env.JWT_ACCESS_SECRET as string
       );
       const refreshToken = jwt.sign(
-        { sessionId: 0, id: user.id, username: user.firstName },
+        { sessionId: 0, id: user.uuid, username: user.username },
         process.env.JWT_REFRESH_SECRET as string
       );
 
@@ -55,9 +58,14 @@ export default async function handler(
       ]);
     });
 
-    await AppDataSource.destroy().then(() => res.end());
-  } catch (e) {
-    console.error(e);
-    res.end();
+    await AppDataSource.destroy().then(() =>
+      res.status(200).json({
+        ok: true,
+      })
+    );
+  } catch (err) {
+    await AppDataSource.destroy();
+    console.error(err);
+    res.status(401).json(err);
   }
 }

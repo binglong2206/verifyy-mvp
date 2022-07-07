@@ -7,6 +7,7 @@ import { User } from "../../db/entity/User";
 import { AppDataSource } from "../../db/data-source";
 import bcrypt from "bcrypt";
 import { resolveNaptr } from "dns";
+import next from "next";
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,30 +17,34 @@ export default async function handler(
     if (req.method !== "POST") throw new Error("No Access");
 
     await AppDataSource.initialize().then(async () => {
-      const { username, password } = req.body;
+      // Assume form already validated
+      const { firstname, username, password, email } = req.body;
 
-      // Verify username & password
+      // Check if user already exist
       const user = await User.findOneBy({
-        firstName: username,
+        username: username,
       });
-      if (user) throw new Error("user already exist");
-      // const passwordCheck = await bcrypt.compare(password, "hasedpassword");
-      // if (!passwordCheck) throw new Error("wrong username or password");
+      if (user) throw Error("user already exist");
 
-      const newUser = await new User();
-      newUser.firstName = username;
-      bcrypt.hash(password, 10, (err, res) => {
-        newUser.lastName = res;
-      });
+      // Add user & hashed password
+      const newUser = new User();
+      newUser.firstname = firstname;
+      newUser.username = username;
+      newUser.email = email;
+
+      const hashed = bcrypt.hashSync(password, 10);
+      if (!hashed) throw Error("something went wrong");
+      newUser.hashed_password = hashed;
+
       await AppDataSource.manager.save(newUser);
 
       // Sign JWT Token
       const accessToken = jwt.sign(
-        { id: newUser.id, username: newUser.firstName },
+        { id: newUser.uuid, username: newUser.username },
         process.env.JWT_ACCESS_SECRET as string
       );
       const refreshToken = jwt.sign(
-        { sessionId: 0, id: newUser.id, username: newUser.firstName },
+        { sessionId: 0, id: newUser.uuid, username: newUser.username },
         process.env.JWT_REFRESH_SECRET as string
       );
 
@@ -61,10 +66,10 @@ export default async function handler(
         }),
       ]);
     });
-
     await AppDataSource.destroy().then(() => res.end());
-  } catch (e) {
-    console.error(e);
-    res.end();
+  } catch (err) {
+    await AppDataSource.destroy();
+    console.error(err);
+    res.status(400).end();
   }
 }
