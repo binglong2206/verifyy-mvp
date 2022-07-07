@@ -45,7 +45,7 @@ const Login: NextPage = () => {
     })
       .then((res) => {
         if (res.ok) {
-          Router.push("/login");
+          Router.push("/");
         } else throw Error("something went wrong");
       })
       .catch((err) => console.log(err.message));

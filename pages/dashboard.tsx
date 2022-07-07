@@ -1,5 +1,5 @@
 import type { NextPage, GetServerSidePropsContext } from "next";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
@@ -17,19 +17,36 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ id, username }) => {
+  const [data, setData] = useState<string>("No Access");
+
+  const fetchDashboard = async () => {
+    await fetch("http://localhost:8000/data", {
+      credentials: "include",
+    })
+      .then((res) => res.text())
+      .then((data) => setData(data))
+      .catch(() => console.log("cannot connect"));
+  };
+
   const logout = async () => {
     const res = await fetch("api/logoutAPI", {
       method: "DELETE",
       credentials: "include",
     });
 
-    Router.push("/login");
+    Router.push("/");
   };
+
+  useEffect(() => {
+    fetchDashboard();
+  }, []);
 
   return (
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>DASHBOARD</h1>
+        <h2>User: {username}</h2>
+        <h2>Data: {data}</h2>
         <button onClick={logout}>Logout</button>
       </main>
     </div>
@@ -46,7 +63,7 @@ export const getServerSideProps = async (
   if (!context.req.headers.cookie) {
     return {
       redirect: {
-        destination: "/login",
+        destination: "/",
       },
     };
   }
