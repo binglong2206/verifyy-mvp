@@ -34,7 +34,17 @@ export default async function handler(
     `https://graph.facebook.com/v14.0/${instagramId}?fields=business_discovery.username(${name}){followers_count,media_count,media{comments_count,like_count,media_url}}&access_token=${accessToken}`
   ).then((r) => r.json());
 
-  res.send(queryResult);
+  // Save datas in DB & redirect to dashboard that then auto request data from DB
+  await fetch("http://localhost:8000/fb", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(queryResult),
+  })
+    .then((r) => r.text())
+    .then(() => res.redirect("/signup"));
 
   // Request Access Token
 }
