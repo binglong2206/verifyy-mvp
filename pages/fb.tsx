@@ -17,7 +17,7 @@ interface LoginForm {
 }
 
 const Login: NextPage = () => {
-  const ig_url = `https://www.facebook.com/v14.0/dialog/oauth?client_id=605443167544553&scope=instagram_basic,pages_show_list,instagram_manage_insights,pages_read_engagement&redirect_uri=http://localhost:3000/api/fb_redirect`;
+  const ig_url = `https://www.facebook.com/v14.0/dialog/oauth?client_id=605443167544553&scope=instagram_basic,pages_show_list,instagram_manage_insights,pages_read_engagement&redirect_uri=http://localhost:3000/api/fb_oa`;
 
   return (
     <div className={styles.container}>
@@ -25,7 +25,7 @@ const Login: NextPage = () => {
         <div>
           <h1>fb</h1>
           <button onClick={googleSignIn}>Google</button>
-          <Link href={ig_url}>
+          <Link href={"api"}>
             <button>Instagram</button>
           </Link>
         </div>

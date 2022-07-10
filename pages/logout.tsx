@@ -19,7 +19,7 @@ interface HomeProps {
 const Logout: NextPage<HomeProps> = ({ id, username }) => {
   const formSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // this stops it from submitting the form
-    const res = await fetch("api/logout", {
+    const res = await fetch("api/logout_api", {
       method: "DELETE",
       credentials: "include",
     });

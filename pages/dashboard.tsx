@@ -29,12 +29,12 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
   };
 
   const logout = async () => {
-    const res = await fetch("api/logoutAPI", {
+    const res = await fetch("api/logout_api", {
       method: "DELETE",
       credentials: "include",
     });
 
-    Router.push("/");
+    Router.push("/login");
   };
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export const getServerSideProps = async (
   if (!context.req.headers.cookie) {
     return {
       redirect: {
-        destination: "/",
+        destination: "/login",
       },
     };
   }

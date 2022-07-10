@@ -12,7 +12,7 @@ export default async function handler(
   console.log("log");
   const code = req.url?.split("code=")[1];
   const accessToken = await fetch(
-    `https://graph.facebook.com/v14.0/oauth/access_token?client_id=${process.env.FB_CLIENT_ID}&redirect_uri=http://localhost:3000/api/fb_redirect&client_secret=${process.env.FB_CLIENT_SECRET}&code=${code}` // it doesnt actually redirect
+    `https://graph.facebook.com/v14.0/oauth/access_token?client_id=${process.env.FB_CLIENT_ID}&redirect_uri=http://localhost:3000/api/fb_data&client_secret=${process.env.FB_CLIENT_SECRET}&code=${code}` // it doesnt actually redirect
   )
     .then((r) => r.json())
     .then((json) => json.access_token);
@@ -34,17 +34,19 @@ export default async function handler(
     `https://graph.facebook.com/v14.0/${instagramId}?fields=business_discovery.username(${name}){followers_count,media_count,media{comments_count,like_count,media_url}}&access_token=${accessToken}`
   ).then((r) => r.json());
 
-  // Save datas in DB & redirect to dashboard that then auto request data from DB
-  await fetch("http://localhost:8000/fb", {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(queryResult),
-  })
-    .then((r) => r.text())
-    .then(() => res.redirect("/signup"));
+  console.log(queryResult);
 
-  // Request Access Token
+  // Save datas in DB & redirect to dashboard that then auto request data from DB
+  // await fetch("http://localhost:8000/fb", {
+  //   method: "POST",
+  //   credentials: "include",
+  //   headers: {
+  //     "content-type": "application/json",
+  //   },
+  //   body: JSON.stringify(queryResult),
+  // })
+  //   .then((r) => r.text())
+  //   .then(() => res.redirect("/signup"));
+
+  res.redirect("/");
 }

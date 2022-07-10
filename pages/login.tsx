@@ -6,36 +6,34 @@ import { getCookies } from "cookies-next";
 import React, { useEffect, useState, useReducer } from "react";
 import Router from "next/router";
 import { loginFormReducer } from "../utils/formReducer";
+import Link from "next/link";
 const axios = require("axios").default;
 
-interface signUpForm {
+interface LoginForm {
   username: "";
   password: "";
 }
 
 const Login: NextPage = () => {
   const [state, dispatch] = useReducer(
-    (state: signUpForm, param: any) => {
+    (state: LoginForm, param: any) => {
       return { ...state, ...param }; // merge initial state with dispatch params
     },
     {
-      firstname: "",
       username: "",
       password: "",
-      email: "",
     }
   );
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(state);
     dispatch({ [name]: value });
   };
 
   const formSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // this stops it from submitting the form
 
-    await fetch("api/signup_api", {
+    await fetch("api/login_api", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -45,8 +43,8 @@ const Login: NextPage = () => {
     })
       .then((res) => {
         if (res.ok) {
-          Router.push("/");
-        } else throw Error("something went wrong");
+          Router.push("/dashboard");
+        } else throw Error("wrong username or password");
       })
       .catch((err) => console.log(err.message));
   };
@@ -54,15 +52,8 @@ const Login: NextPage = () => {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1 className={styles.title}>SignUp</h1>
+        <h1 className={styles.title}>Login</h1>
         <form onSubmit={formSubmit}>
-          <label htmlFor="firstname">firstname</label>
-          <input
-            id="firstname"
-            name="firstname"
-            onChange={handleInput}
-            type="text"
-          />
           <label htmlFor="username">username</label>
           <input
             id="username"
@@ -77,10 +68,11 @@ const Login: NextPage = () => {
             onChange={handleInput}
             type="text"
           />
-          <label htmlFor="email">email</label>
-          <input id="email" name="email" onChange={handleInput} type="text" />
-          <button>Signup</button>
+          <button>Login</button>
         </form>
+        <Link href="/signup">
+          <button>Signup</button>
+        </Link>
       </main>
     </div>
   );
