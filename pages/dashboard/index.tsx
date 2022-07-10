@@ -1,15 +1,10 @@
 import type { NextPage, GetServerSidePropsContext } from "next";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
 import cookie from "cookie";
-import { json } from "stream/consumers";
-import authMiddleware from "../utils/auth";
-import { getCookies } from "cookies-next";
+import authMiddleware from "../../utils/auth";
 import Router from "next/router";
-
-const axios = require("axios").default;
 
 interface HomeProps {
   id: number;
@@ -18,6 +13,7 @@ interface HomeProps {
 
 const Home: NextPage<HomeProps> = ({ id, username }) => {
   const [data, setData] = useState<string>("No Access");
+  const [loading, setLoading] = useState(false);
 
   const fetchDashboard = async () => {
     await fetch("http://localhost:8000/data", {
@@ -48,6 +44,25 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
         <h2>User: {username}</h2>
         <h2>Data: {data}</h2>
         <button onClick={logout}>Logout</button>
+        <div>
+          <h3>Connect to Youtube</h3>
+          <Link href="api/yt_oauth">
+            <button>youtube</button>
+          </Link>
+          <h3>Connect to Instagram</h3>
+          <Link href="api/fb_oauth">
+            <button onClick={() => setLoading(true)}>instagram</button>
+          </Link>
+          <h3>Connect to Facebook</h3>
+          <Link href="api/fb_oauth">
+            <button onClick={() => setLoading(true)}>facebook</button>
+          </Link>
+          <h3>TikTok coming soon....</h3>
+          <Link href="api/fb_oauth">
+            <button disabled={true}>instagram</button>
+          </Link>
+        </div>
+        <div>{loading ? <h1>loading...</h1> : null}</div>
       </main>
     </div>
   );
