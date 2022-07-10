@@ -9,11 +9,16 @@ export default async function handler(
   res: NextApiResponse
 ) {
   // Match yt_csrf with cookie
+  console.log(req.url);
+  const csrfState = req.url
+    ?.substring(req.url?.indexOf("state="), req.url?.indexOf("&code="))
+    .split("tate=")[1];
+  if (req.cookies.yt_csrf !== csrfState) res.end("csrf invalid");
+
   // Get Code
   const code = req.url
     ?.substring(req.url?.indexOf("&code="), req.url?.indexOf("&scope="))
     .split("code=")[1];
-  console.log(code);
 
   // Get Access Token
   const accessToken = await fetch(

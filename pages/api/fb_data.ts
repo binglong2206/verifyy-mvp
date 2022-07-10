@@ -8,6 +8,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // Check csrfState
+  console.log(req.url);
+  // const csrfState = req.url
+  //   ?.substring(req.url?.indexOf("state="), req.url?.indexOf("&code="))
+  //   .split("tate=")[1];
+  // if (req.cookies.yt_csrf !== csrfState) res.end("csrf invalid");
+
   // Get Code, AccessToken, PageId, InstagramName, InstagramId
   console.log("log");
   const code = req.url?.split("code=")[1];
