@@ -11,7 +11,7 @@ const Login: NextPage = () => {
       <main className={styles.main}>
         <h1>HomePage</h1>
         <Link href={"/login"}>
-          <button>go to login page</button>
+          <button>go to login page </button>
         </Link>
       </main>
     </div>

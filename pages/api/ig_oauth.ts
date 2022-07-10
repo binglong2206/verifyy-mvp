@@ -11,7 +11,7 @@ export default async function handler(
   const csrfState = Math.random().toString(36).substring(2);
   res.setHeader(
     "Set-Cookie",
-    cookie.serialize("fb_csrf", csrfState, { maxAge: 60000 })
+    cookie.serialize("ig_csrf", csrfState, { maxAge: 60000 })
   );
 
   let url = "https://www.facebook.com/v14.0/dialog/oauth";
@@ -21,7 +21,7 @@ export default async function handler(
   url += "&response_type=code";
   url +=
     "&scope=instagram_basic,pages_show_list,instagram_manage_insights,pages_read_engagement";
-  url += "&state=" + csrfState;
+  // url += "&state=" + csrfState;
 
   res.redirect(url);
 }

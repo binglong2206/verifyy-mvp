@@ -21,7 +21,7 @@ export default async function handler(
   url += "&response_type=code";
   url +=
     "&scope=instagram_basic,pages_show_list,instagram_manage_insights,pages_read_engagement";
-  url += "&state=" + csrfState;
+  // url += "&state=" + csrfState;
 
   res.redirect(url);
 }
