@@ -3,13 +3,13 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import { rawListeners } from "process";
+import axios from "axios";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   // Match yt_csrf with cookie
-  console.log(req.url);
   const csrfState = req.url
     ?.substring(req.url?.indexOf("state="), req.url?.indexOf("&code="))
     .split("tate=")[1];

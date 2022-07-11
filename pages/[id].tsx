@@ -1,51 +1,66 @@
-import { NextPage } from "next";
-import data from "../testdata";
+import type { NextPage, GetServerSidePropsContext } from "next";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import cookie from "cookie";
+import authMiddleware from "../utils/auth";
+import Router from "next/router";
+import { useRouter } from "next/router";
+import axios from "axios";
 
-interface StaticPath {
-  params: { id: string };
+interface HomeProps {
+  id: number;
+  username: string;
 }
 
-interface StaticProps {}
+const Home: NextPage<HomeProps> = ({ id, username }) => {
+  const [data, setData] = useState<string>("No Access");
+  const [loading, setLoading] = useState(false);
 
-interface Params {
-  id: string;
-}
+  const fetchDashboard = async () => {
+    await fetch("http://localhost:8000/data", {
+      credentials: "include",
+    })
+      .then((res) => res.text())
+      .then((data) => setData(data))
+      .catch(() => console.log("cannot connect"));
+  };
 
-interface DashBoardProps {
-  data: string;
-}
+  const logout = async () => {
+    const res = await fetch("api/logout_api", {
+      method: "DELETE",
+      credentials: "include",
+    });
 
-const Blog: NextPage = ({ data }) => {
+    Router.push("/login");
+  };
+
+  useEffect(() => {
+    fetchDashboard();
+  }, []);
+
   return (
     <div>
-      <h1>Check it out!</h1>
-      <h1>{data}</h1>
-      <br />
+      <main>
+        <h1>PUBLIC DASHBOARD</h1>
+        <h2>User: {username}</h2>
+        <h2>ID: {id}</h2>
+      </main>
     </div>
   );
 };
 
-// Depending on the routes requested, send props to page
-export async function getStaticProps({ params }) {
-  const id = params.id;
-  const data = await fetch(`http://localhost:3000/api/${id}`)
-    .then((r) => r.json())
-    .then((data) => data.data);
+export default Home;
 
-  return {
-    props: { data },
-  };
-}
+// SSR processes that can pass props to page component, use this to check token
+// This itself is like a server that listens to page request and return the page HTML with props
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const slug = context.params?.id;
 
-// Set static routes
-export async function getStaticPaths() {
-  let params: StaticPath[] = []; // {params: {id: ...}}
-  data.blogs.map((el) => params.push({ params: { id: el.id } }));
+  const serverProps = await fetch(
+    `http://localhost:8000/checkSlug/${slug}`
+  ).then((r) => r.json());
 
-  return {
-    paths: params,
-    fallback: true,
-  };
-}
-
-export default Blog;
+  return serverProps;
+};

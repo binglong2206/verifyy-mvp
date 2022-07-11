@@ -43,7 +43,6 @@ const authenticateJWT = async (
       process.env.JWT_REFRESH_SECRET as string
     ) as RefreshLoad;
 
-    console.log(access);
     return {
       props: {
         id: access.id,
@@ -51,7 +50,7 @@ const authenticateJWT = async (
       },
     };
   } catch (e) {
-    console.log("either access or refresh token is invalid");
+    console.error("either access or refresh token is invalid");
     // Clear cookie if either token false
     context.res.setHeader("Set-Cookie", [
       cookie.serialize("accessToken", "clear", {
@@ -101,7 +100,6 @@ const refreshAccessToken = async (
       })
     );
 
-    console.log("welcome to dashboard");
     return {
       props: {
         id: session.id,
@@ -118,16 +116,35 @@ const refreshAccessToken = async (
   }
 };
 
+//*********** Helper CHECK SLUG ****************/
+const checkSlug = (refreshToken: string, slug: string) => {
+  const session = jwt.verify(
+    refreshToken,
+    process.env.JWT_REFRESH_SECRET as string
+  ) as RefreshLoad;
+  if (session.username === slug) {
+    return true;
+  } else return false;
+};
+
 export default async function authMiddleware(
   accessToken: string,
   refreshToken: string,
-  context: GetServerSidePropsContext
+  context: GetServerSidePropsContext,
+  slug: string
 ) {
   if (!refreshToken) {
-    console.log("refreshtoken doesnt exist");
     return {
       redirect: {
         destination: "/login",
+      },
+    };
+  }
+
+  if (!checkSlug(refreshToken, slug)) {
+    return {
+      redirect: {
+        destination: "/404",
       },
     };
   }

@@ -17,7 +17,6 @@ export default async function handler(
 
     await AppDataSource.initialize().then(async () => {
       const { username, password } = req.body;
-      console.log(username, password);
       // Verify username & password
       const user = await User.findOneBy({
         username: username,

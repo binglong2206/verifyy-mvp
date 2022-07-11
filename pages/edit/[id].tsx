@@ -6,6 +6,7 @@ import cookie from "cookie";
 import authMiddleware from "../../utils/auth";
 import Router from "next/router";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 interface HomeProps {
   id: number;
@@ -47,19 +48,19 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
         <button onClick={logout}>Logout</button>
         <div>
           <h3>Connect to Youtube</h3>
-          <Link href="api/yt_oauth">
+          <Link href="/api/yt_oauth">
             <button>youtube</button>
           </Link>
           <h3>Connect to Instagram</h3>
-          <Link href="api/fb_oauth">
+          <Link href="/api/fb_oauth">
             <button onClick={() => setLoading(true)}>instagram</button>
           </Link>
           <h3>Connect to Facebook</h3>
-          <Link href="api/fb_oauth">
+          <Link href="/api/fb_oauth">
             <button onClick={() => setLoading(true)}>facebook</button>
           </Link>
           <h3>TikTok coming soon....</h3>
-          <Link href="api/fb_oauth">
+          <Link href="/api/fb_oauth">
             <button disabled={true}>instagram</button>
           </Link>
         </div>
@@ -76,6 +77,8 @@ export default Home;
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
+  const slug = context.params?.id;
+
   if (!context.req.headers.cookie) {
     return {
       redirect: {
@@ -86,6 +89,11 @@ export const getServerSideProps = async (
   const { accessToken, refreshToken } = cookie.parse(
     context.req.headers.cookie as string
   );
-  const serverProps = await authMiddleware(accessToken, refreshToken, context);
+  const serverProps = await authMiddleware(
+    accessToken,
+    refreshToken,
+    context,
+    slug as string
+  );
   return serverProps;
 };

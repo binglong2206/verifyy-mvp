@@ -76,6 +76,7 @@ export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   console.log(context.req.url?.substring(11));
+
   if (!context.req.headers.cookie) {
     return {
       redirect: {
