@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/dashboard/[pid}.js"
+    "to_delete/dashboard/[pid}.js"
   ],
   "exclude": ["node_modules"]
 }
