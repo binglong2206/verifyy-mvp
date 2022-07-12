@@ -87,13 +87,13 @@ const refreshAccessToken = async (
         username: session.username,
       },
       process.env.JWT_ACCESS_SECRET as string,
-      { expiresIn: "5m" }
+      { expiresIn: "30m" }
     );
 
     context.res.setHeader(
       "Set-Cookie",
       cookie.serialize("accessToken", accessToken, {
-        maxAge: 300,
+        maxAge: 3000,
         httpOnly: true,
         sameSite: true,
         secure: true,
