@@ -8,6 +8,7 @@ import Router from "next/router";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { getCookies } from "cookies-next";
+import { useUserStore } from "../state/useStore";
 
 interface HomeProps {
   id: number;
@@ -15,15 +16,16 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ id, username }) => {
-  const [data, setData] = useState<string>("No Access");
+  const email = useUserStore((state) => state.email);
+  const setUserState = useUserStore((state) => state.setUserState);
   const [loading, setLoading] = useState(false);
 
   const fetchDashboard = async () => {
-    await fetch("http://localhost:8000/data", {
+    await fetch(`http://localhost:8000/dashboard/${id}`, {
       credentials: "include",
     })
       .then((res) => res.text())
-      .then((data) => setData(data))
+      // .then((data) => setData(data))
       .catch(() => console.log("cannot connect"));
   };
 
@@ -36,22 +38,23 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
     Router.push("/");
   };
 
-  useEffect(() => {
-    fetchDashboard();
-  }, []);
+  // useEffect(() => {
+  //   fetchDashboard();
+  // }, []);
 
   return (
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>DASHBOARD</h1>
+        <h2>ID: {id}</h2>
         <h2>User: {username}</h2>
-        <h2>Data: {data}</h2>
+        <h2>Email: {email}</h2>
         <button onClick={logout}>Logout</button>
-
+        <div>{loading ? <h1>loading...</h1> : null}</div>
         <div>
           <h3>Connect to Youtube</h3>
           <Link href="/api/yt_oauth">
-            <button>youtube</button>
+            <button onClick={() => setLoading(true)}>youtube</button>
           </Link>
           <h3>Connect to Instagram</h3>
           <Link href="/api/fb_oauth">
@@ -66,7 +69,6 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
             <button disabled={true}>instagram</button>
           </Link>
         </div>
-        <div>{loading ? <h1>loading...</h1> : null}</div>
       </main>
     </div>
   );

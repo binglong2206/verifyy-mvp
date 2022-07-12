@@ -8,6 +8,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log("OATUH: ", req.cookies);
   const csrfState = Math.random().toString(36).substring(2);
   res.setHeader(
     "Set-Cookie",

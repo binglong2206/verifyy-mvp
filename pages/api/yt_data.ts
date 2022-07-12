@@ -10,6 +10,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   // Match yt_csrf with cookie
+  console.log("DATA: ", req.cookies);
   const csrfState = req.url
     ?.substring(req.url?.indexOf("state="), req.url?.indexOf("&code="))
     .split("state=")[1];
@@ -32,23 +33,23 @@ export default async function handler(
 
   // Make query
   const queryResult = await fetch(
-    `https://youtubeanalytics.googleapis.com/v2/reports?ids=channel==MINE&startDate=2022-01-01&endDate=2022-02-22&metrics=views&dimensions=day&sort=day&access_token=${accessToken}`
+    `https://youtubeanalytics.googleapis.com/v2/reports?ids=channel==MINE&startDate=2022-02-19&endDate=2022-02-22&metrics=views&dimensions=day&sort=day&access_token=${accessToken}`
   )
     .then((res) => res.json())
     .then((data) => data);
 
   // Post query result to DB
-  // await fetch("http://localhost:8000/fb", {
-  //   method: "POST",
-  //   credentials: "include",
-  //   headers: {
-  //     "content-type": "application/json",
-  //   },
-  //   body: JSON.stringify(queryResult),
-  // })
-  //   .then((r) => r.text())
-  //   .then(() => res.redirect("/signup"));
+  await fetch("http://localhost:8000/fb", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(queryResult),
+  })
+    .then((r) => r.text())
+    .then(() => res.redirect("/signup"));
 
-  // Redirect to dashboard
-  res.send(queryResult);
+  // Redirect to edit, use special url to Router.push back via client so can include cookie
+  res.redirect("/redirect_edit");
 }

@@ -1,9 +1,21 @@
 import create from "zustand";
 
-interface DB {
+interface User {
   username: string;
+  email: string;
+  setUserState: (email: string, username?: string) => void;
 }
 
-const useSore = create<DB>()((set) => ({
-  username: "sad",
+// Set(state => {...}) -> use state if you want access to prev state
+// If not, set({...}) directly will suffice
+export const useUserStore = create<User>()((set) => ({
+  username: "",
+  email: "",
+
+  setUserState: (email: string, username?: string): void => {
+    set({
+      username: username,
+      email: email,
+    });
+  },
 }));

@@ -10,8 +10,8 @@ const Login: NextPage = () => {
     <div className={styles.container}>
       <main className={styles.main}>
         <h1>HomePage</h1>
-        <Link href={"/login"}>
-          <button>go to login page </button>
+        <Link href={"/edit"}>
+          <button>go to App</button>
         </Link>
       </main>
     </div>
