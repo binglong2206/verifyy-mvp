@@ -3,8 +3,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { serialize } from "cookie";
 import jwt from "jsonwebtoken";
 import { setCookie } from "cookies-next";
-import { User } from "../db/entity/User";
-import { AppDataSource } from "../db/data-source";
+import { User } from "./db/entity/User";
+import { AppDataSource } from "./db/data-source";
 import bcrypt from "bcrypt";
 
 export default async function handler(
