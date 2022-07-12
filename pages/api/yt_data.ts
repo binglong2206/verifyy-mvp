@@ -12,7 +12,7 @@ export default async function handler(
   // Match yt_csrf with cookie
   const csrfState = req.url
     ?.substring(req.url?.indexOf("state="), req.url?.indexOf("&code="))
-    .split("tate=")[1];
+    .split("state=")[1];
   if (req.cookies.yt_csrf !== csrfState) res.end("csrf invalid");
 
   // Get Code

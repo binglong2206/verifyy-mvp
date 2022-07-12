@@ -14,7 +14,6 @@ export default async function handler(
 ) {
   try {
     if (req.method !== "POST") throw new Error("No Access");
-
     await AppDataSource.initialize().then(async () => {
       const { username, password } = req.body;
       // Verify username & password
@@ -30,11 +29,11 @@ export default async function handler(
 
       // Sign JWT Token
       const accessToken = jwt.sign(
-        { id: user.uuid, username: user.username },
+        { id: user.id, username: user.username },
         process.env.JWT_ACCESS_SECRET as string
       );
       const refreshToken = jwt.sign(
-        { sessionId: 0, id: user.uuid, username: user.username },
+        { sessionId: 0, id: user.id, username: user.username },
         process.env.JWT_REFRESH_SECRET as string
       );
 
@@ -57,14 +56,10 @@ export default async function handler(
       ]);
     });
 
-    await AppDataSource.destroy().then(() =>
-      res.status(200).json({
-        ok: true,
-      })
-    );
+    await AppDataSource.destroy().then(() => res.status(200).end());
   } catch (err) {
     await AppDataSource.destroy();
     console.error(err);
-    res.status(401).json(err);
+    res.status(401).end();
   }
 }

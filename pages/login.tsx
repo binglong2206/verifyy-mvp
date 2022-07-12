@@ -43,7 +43,7 @@ const Login: NextPage = () => {
     })
       .then((res) => {
         if (res.ok) {
-          Router.push(`edit/${state.username}`);
+          Router.push("/edit");
         } else throw Error("wrong username or password");
       })
       .catch((err) => console.log(err.message));
