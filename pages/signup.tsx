@@ -35,7 +35,7 @@ const Login: NextPage = () => {
   const formSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // this stops it from submitting the form
 
-    await fetch("api/signup_api", {
+    await fetch("http://localhost:8000/signup", {
       method: "POST",
       headers: {
         "content-type": "application/json",

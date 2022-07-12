@@ -130,21 +130,12 @@ const checkSlug = (refreshToken: string, slug: string) => {
 export default async function authMiddleware(
   accessToken: string,
   refreshToken: string,
-  context: GetServerSidePropsContext,
-  slug: string
+  context: GetServerSidePropsContext
 ) {
   if (!refreshToken) {
     return {
       redirect: {
         destination: "/login",
-      },
-    };
-  }
-
-  if (!checkSlug(refreshToken, slug)) {
-    return {
-      redirect: {
-        destination: "/404",
       },
     };
   }

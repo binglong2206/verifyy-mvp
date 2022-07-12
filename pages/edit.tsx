@@ -1,12 +1,13 @@
 import type { NextPage, GetServerSidePropsContext } from "next";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import styles from "../../styles/Home.module.css";
+import styles from "../styles/Home.module.css";
 import cookie from "cookie";
 import authMiddleware from "../utils/auth";
 import Router from "next/router";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { getCookies } from "cookies-next";
 
 interface HomeProps {
   id: number;
@@ -27,12 +28,12 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
   };
 
   const logout = async () => {
-    const res = await fetch("api/logout_api", {
+    const res = await fetch("http://localhost:8000/logout", {
       method: "DELETE",
       credentials: "include",
     });
 
-    Router.push("/login");
+    Router.push("/");
   };
 
   useEffect(() => {
@@ -46,6 +47,7 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
         <h2>User: {username}</h2>
         <h2>Data: {data}</h2>
         <button onClick={logout}>Logout</button>
+
         <div>
           <h3>Connect to Youtube</h3>
           <Link href="/api/yt_oauth">
@@ -77,8 +79,6 @@ export default Home;
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const slug = context.params?.id;
-
   if (!context.req.headers.cookie) {
     return {
       redirect: {
@@ -89,11 +89,6 @@ export const getServerSideProps = async (
   const { accessToken, refreshToken } = cookie.parse(
     context.req.headers.cookie as string
   );
-  const serverProps = await authMiddleware(
-    accessToken,
-    refreshToken,
-    context,
-    slug as string
-  );
+  const serverProps = await authMiddleware(accessToken, refreshToken, context);
   return serverProps;
 };

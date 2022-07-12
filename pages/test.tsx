@@ -17,7 +17,7 @@ const Login: NextPage = () => {
   const requestCookie = async () => {
     await fetch("http://localhost:8000/cookie", {
       credentials: "include",
-    }).then((r) => console.log(r));
+    });
   };
 
   return (
@@ -32,6 +32,7 @@ const Login: NextPage = () => {
 
 export default Login;
 
+// SSR don't have cookies in itself, only avalible in the req.cookies
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
@@ -39,10 +40,10 @@ export const getServerSideProps = async (
 
   const whatver = await fetch("http://localhost:8000/cookie", {
     credentials: "include",
-    headers: {
-      // "Access-Control-Allow-Origin": "*",
-      Authorization: "Bearer " + "username:password",
-    },
+    // headers: {
+    //   // "Access-Control-Allow-Origin": "*",
+    //   Authorization: "Bearer " + "username:password",
+    // },
   });
 
   return {
