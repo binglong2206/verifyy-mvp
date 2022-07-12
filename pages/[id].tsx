@@ -6,13 +6,14 @@ import authMiddleware from "../utils/auth";
 import Router from "next/router";
 import { useRouter } from "next/router";
 import axios from "axios";
+import beta_users from "../beta-users";
 
-interface HomeProps {
+interface DashboardProp {
   id: number;
   username: string;
 }
 
-const Home: NextPage<HomeProps> = ({ id, username }) => {
+const Home: NextPage<DashboardProp> = ({ id, username }) => {
   const [data, setData] = useState<string>("No Access");
   const [loading, setLoading] = useState(false);
 
@@ -42,8 +43,8 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
     <div>
       <main>
         <h1>PUBLIC DASHBOARD</h1>
-        <h2>User: {username}</h2>
         <h2>ID: {id}</h2>
+        <h2>User: {username}</h2>
       </main>
     </div>
   );
@@ -57,10 +58,19 @@ export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const slug = context.params?.id;
+  const user = beta_users.find((e) => e.username === slug);
 
-  const serverProps = await fetch(
-    `http://localhost:8000/checkSlug/${slug}`
-  ).then((r) => r.json());
-
-  return serverProps;
+  if (!user) {
+    return {
+      redirect: {
+        destination: "/404",
+      },
+    };
+  } else
+    return {
+      props: {
+        id: user.id,
+        username: user.username,
+      },
+    };
 };
