@@ -43,7 +43,6 @@ const authenticateJWT = async (
       process.env.JWT_REFRESH_SECRET as string
     ) as RefreshLoad;
 
-    console.log("both verified");
     return {
       props: {
         id: access.id,
