@@ -8,12 +8,19 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log("OATUH: ", req.cookies);
+  const { accessToken, refreshToken } = req.cookies;
+  console.log(accessToken);
+
   const csrfState = Math.random().toString(36).substring(2);
-  res.setHeader(
-    "Set-Cookie",
-    cookie.serialize("yt_csrf", csrfState, { maxAge: 60000 })
-  );
+  res.setHeader("Set-Cookie", [
+    cookie.serialize("yt_csrf", csrfState, { maxAge: 300 }),
+    cookie.serialize("web_accessToken", accessToken as string, {
+      maxAge: 300,
+    }),
+    cookie.serialize("web_refreshToken", refreshToken as string, {
+      maxAge: 300,
+    }),
+  ]);
 
   let url = "https://accounts.google.com/o/oauth2/v2/auth";
 

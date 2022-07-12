@@ -20,15 +20,6 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
   const setUserState = useUserStore((state) => state.setUserState);
   const [loading, setLoading] = useState(false);
 
-  const fetchDashboard = async () => {
-    await fetch(`http://localhost:8000/dashboard/${id}`, {
-      credentials: "include",
-    })
-      .then((res) => res.text())
-      // .then((data) => setData(data))
-      .catch(() => console.log("cannot connect"));
-  };
-
   const logout = async () => {
     const res = await fetch("http://localhost:8000/logout", {
       method: "DELETE",
@@ -38,9 +29,21 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
     Router.push("/");
   };
 
-  // useEffect(() => {
-  //   fetchDashboard();
-  // }, []);
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      await fetch(`http://localhost:8000/dashboard/${id}`, {
+        credentials: "include",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const { email } = data;
+          useUserStore.setState({ email: email });
+        })
+        // .then((data) => setUserState(data))
+        .catch(() => console.log("cannot connect"));
+    };
+    fetchDashboard();
+  });
 
   return (
     <div className={styles.container}>
@@ -53,8 +56,16 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
         <div>{loading ? <h1>loading...</h1> : null}</div>
         <div>
           <h3>Connect to Youtube</h3>
+          <button
+            onClick={() => {
+              setLoading(true);
+              Router.push("/api/yt_oauth");
+            }}
+          >
+            youtube
+          </button>
           <Link href="/api/yt_oauth">
-            <button onClick={() => setLoading(true)}>youtube</button>
+            <button onClick={() => setLoading(true)}>youtube2</button>
           </Link>
           <h3>Connect to Instagram</h3>
           <Link href="/api/fb_oauth">

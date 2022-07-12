@@ -43,6 +43,7 @@ const authenticateJWT = async (
       process.env.JWT_REFRESH_SECRET as string
     ) as RefreshLoad;
 
+    console.log("both verified");
     return {
       props: {
         id: access.id,
@@ -50,7 +51,6 @@ const authenticateJWT = async (
       },
     };
   } catch (e) {
-    console.error("either access or refresh token is invalid");
     // Clear cookie if either token false
     context.res.setHeader("Set-Cookie", [
       cookie.serialize("accessToken", "clear", {
@@ -87,19 +87,21 @@ const refreshAccessToken = async (
         id: session.id,
         username: session.username,
       },
-      process.env.JWT_ACCESS_SECRET as string
+      process.env.JWT_ACCESS_SECRET as string,
+      { expiresIn: "5m" }
     );
 
     context.res.setHeader(
       "Set-Cookie",
       cookie.serialize("accessToken", accessToken, {
+        maxAge: 300,
         httpOnly: true,
         sameSite: true,
         secure: true,
         path: "/",
       })
     );
-
+    console.log("refreshed access token");
     return {
       props: {
         id: session.id,
@@ -107,6 +109,7 @@ const refreshAccessToken = async (
       },
     };
   } catch (e) {
+    console.error("whatver");
     console.error(e);
     return {
       redirect: {
