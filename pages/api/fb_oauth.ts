@@ -8,11 +8,18 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const { accessToken, refreshToken } = req.cookies;
+
   const csrfState = Math.random().toString(36).substring(2);
-  res.setHeader(
-    "Set-Cookie",
-    cookie.serialize("fb_csrf", csrfState, { maxAge: 60000 })
-  );
+  res.setHeader("Set-Cookie", [
+    cookie.serialize("fb_csrf", csrfState, { maxAge: 300 }),
+    cookie.serialize("web_accessToken", accessToken as string, {
+      maxAge: 300,
+    }),
+    cookie.serialize("web_refreshToken", refreshToken as string, {
+      maxAge: 300,
+    }),
+  ]);
 
   let url = "https://www.facebook.com/v14.0/dialog/oauth";
 

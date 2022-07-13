@@ -38,7 +38,7 @@ export default async function handler(
   ).then((r) => r.json());
   const pageId = pageList.data[0].id;
 
-  // Get likes & followers, fan_count -> likes
+  // Get followers & likes, fan_count -> likes
   const { followers_count, fan_count } = await fetch(
     `https://graph.facebook.com/v14.0/${pageId}?fields=followers_count,fan_count&access_token${accessToken}`
   ).then((r) => r.json());
@@ -66,7 +66,14 @@ export default async function handler(
   const demographics = agg_demographics_geographics.data[0].values[0].value;
   const geographics = agg_demographics_geographics.data[1].values[0].value;
 
-  // Get recent 5 posts
+  console.log("COOKIES: ", req.cookies);
+  console.log("FOLLWERS, LIKES", followers_count, fan_count);
+  console.log("MEDIA_COUNT", media_count);
+  console.log("5 post ids", postIds);
+  console.log("DEMOGRAPHICS", demographics);
+  console.log("GEOGRAPHICS", geographics);
+
+  res.end();
 
   // const { name, id } = await fetch(
   //   `https://graph.facebook.com/v14.0/me/accounts?access_token=${accessToken}`
