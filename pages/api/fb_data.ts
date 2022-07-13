@@ -65,7 +65,6 @@ export default async function handler(
   )
     .then((r) => r.json())
     .catch((e) => console.error(e));
-  console.log("POST LIST HEREEEE: ", post_list);
   const media_count = post_list.summary.total_count;
   const postIds = post_list.data.map((e: { id: string }) => {
     return e.id;
