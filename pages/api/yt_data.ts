@@ -121,7 +121,7 @@ export default async function handler(
   };
 
   // Post data as json to DB's controller
-  await fetch("http://localhost:8000/yt", {
+  await fetch("http://localhost:8000/youtube", {
     method: "POST",
     credentials: "include",
     headers: {

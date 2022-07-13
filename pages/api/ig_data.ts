@@ -9,39 +9,35 @@ export default async function handler(
   res: NextApiResponse
 ) {
   // Check csrfState
-  console.log(req.url);
-  // const csrfState = req.url
-  //   ?.substring(req.url?.indexOf("state="), req.url?.indexOf("&code="))
-  //   .split("tate=")[1];
-  // if (req.cookies.yt_csrf !== csrfState) res.end("csrf invalid");
+  console.log("NEW ONE THIS ONE: ", req.cookies);
 
-  // Get Code, AccessToken, PageId, InstagramName, InstagramId
-  console.log("log");
-  const code = req.url?.split("code=")[1];
-  const accessToken = await fetch(
-    `https://graph.facebook.com/v14.0/oauth/access_token?client_id=${process.env.FB_CLIENT_ID}&redirect_uri=http://localhost:3000/api/fb_data&client_secret=${process.env.FB_CLIENT_SECRET}&code=${code}` // it doesnt actually redirect
-  )
-    .then((r) => r.json())
-    .then((json) => json.access_token);
+  // // Get Code, AccessToken, PageId, InstagramName, InstagramId
+  // console.log("log");
+  // const code = req.url?.split("code=")[1];
+  // const accessToken = await fetch(
+  //   `https://graph.facebook.com/v14.0/oauth/access_token?client_id=${process.env.FB_CLIENT_ID}&redirect_uri=http://localhost:3000/api/fb_data&client_secret=${process.env.FB_CLIENT_SECRET}&code=${code}` // it doesnt actually redirect
+  // )
+  //   .then((r) => r.json())
+  //   .then((json) => json.access_token);
 
-  const { name, id } = await fetch(
-    `https://graph.facebook.com/v14.0/me/accounts?access_token=${accessToken}`
-  )
-    .then((r) => r.json())
-    .then((json) => json.data[0]);
+  // const { name, id } = await fetch(
+  //   `https://graph.facebook.com/v14.0/me/accounts?access_token=${accessToken}`
+  // )
+  //   .then((r) => r.json())
+  //   .then((json) => json.data[0]);
 
-  const instagramId = await fetch(
-    `https://graph.facebook.com/v14.0/${id}?fields=instagram_business_account&access_token=${accessToken}`
-  )
-    .then((r) => r.json())
-    .then((json) => json.instagram_business_account.id);
+  // const instagramId = await fetch(
+  //   `https://graph.facebook.com/v14.0/${id}?fields=instagram_business_account&access_token=${accessToken}`
+  // )
+  //   .then((r) => r.json())
+  //   .then((json) => json.instagram_business_account.id);
 
-  // Start Query
-  const queryResult = await fetch(
-    `https://graph.facebook.com/v14.0/${instagramId}?fields=business_discovery.username(${name}){followers_count,media_count,media{comments_count,like_count,media_url}}&access_token=${accessToken}`
-  ).then((r) => r.json());
+  // // Start Query
+  // const queryResult = await fetch(
+  //   `https://graph.facebook.com/v14.0/${instagramId}?fields=business_discovery.username(${name}){followers_count,media_count,media{comments_count,like_count,media_url}}&access_token=${accessToken}`
+  // ).then((r) => r.json());
 
-  console.log(queryResult);
+  // console.log(queryResult);
 
   // Save datas in DB & redirect to dashboard that then auto request data from DB
   // await fetch("http://localhost:8000/fb", {
@@ -55,5 +51,6 @@ export default async function handler(
   //   .then((r) => r.text())
   //   .then(() => res.redirect("/signup"));
 
-  res.redirect("/");
+  // res.redirect("/redirect_edit");
+  res.end("/");
 }

@@ -9,7 +9,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { accessToken, refreshToken } = req.cookies;
-  console.log(accessToken);
 
   const csrfState = Math.random().toString(36).substring(2);
   res.setHeader("Set-Cookie", [

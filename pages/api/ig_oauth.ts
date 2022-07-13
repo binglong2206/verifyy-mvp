@@ -17,7 +17,7 @@ export default async function handler(
   let url = "https://www.facebook.com/v14.0/dialog/oauth";
 
   url += `?client_id=${process.env.FB_CLIENT_ID}`;
-  url += "&redirect_uri=http://localhost:3000/api/fb_data";
+  url += "&redirect_uri=http://localhost:3000/api/ig_data";
   url += "&response_type=code";
   url +=
     "&scope=instagram_basic,pages_show_list,instagram_manage_insights,pages_read_engagement";
