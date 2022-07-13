@@ -1,0 +1,76 @@
+{
+  "data": [
+    {
+      "name": "page_fans_gender_age",
+      "period": "day",
+      "values": [
+        {
+          "value": {
+            "M.25-34": 37,
+            "F.65+": 1,
+            "F.55-64": 5,
+            "M.55-64": 4,
+            "M.65+": 3,
+            "F.35-44": 6,
+            "M.18-24": 3,
+            "M.35-44": 29,
+            "M.45-54": 19,
+            "F.18-24": 1,
+            "F.25-34": 19
+          },
+          "end_time": "2022-07-10T07:00:00+0000"
+        },
+        {
+          "value": {
+            "M.25-34": 37,
+            "F.65+": 1,
+            "F.55-64": 5,
+            "M.55-64": 4,
+            "M.65+": 3,
+            "F.35-44": 6,
+            "M.18-24": 3,
+            "M.35-44": 29,
+            "M.45-54": 19,
+            "F.18-24": 1,
+            "F.25-34": 19
+          },
+          "end_time": "2022-07-11T07:00:00+0000"
+        }
+      ],
+      "title": "Lifetime Likes by Gender and Age",
+      "description": "Lifetime: Aggregated demographic data about the people who like your Page based on the age and gender information they provide in their user profiles. (Unique Users)",
+      "id": "101831578066144/insights/page_fans_gender_age/day"
+    },
+    {
+      "name": "page_fans_country",
+      "period": "day",
+      "values": [
+        {
+          "value": {
+            "CN": 1,
+            "MY": 7,
+            "TH": 118,
+            "KH": 1
+          },
+          "end_time": "2022-07-10T07:00:00+0000"
+        },
+        {
+          "value": {
+            "CN": 1,
+            "MY": 7,
+            "TH": 118,
+            "KH": 1
+          },
+          "end_time": "2022-07-11T07:00:00+0000"
+        }
+      ],
+      "title": "Lifetime Likes by Country",
+      "description": "Lifetime: Aggregated Facebook location data, sorted by country (top 50), about the people who like your Page. (Unique Users)",
+      "id": "101831578066144/insights/page_fans_country/day"
+    }
+  ],
+  "paging": {
+    "previous": "https://graph.facebook.com/v14.0/101831578066144/insights?access_token=EAAImpbju5OkBAGPI8tSu0ZBZBConuBluWnZC9Q7o4nZBpRlKawrz0Ev5g9PsWZBUL4WmTlbhc0rCVEYKHTEvWlQdgOJlTmU1OQSdkZCr37DfS2EDLqQRhslgCVP0cYPAt3XiS1zm1VzdbIAgu7lKK5uZCREdV51BRO2H1SMTN7ehIV81NB3w6vz6IYaRcT9C4fdTEGNoipqZCAZDZD&pretty=0&metric=page_fans_gender_age%2Cpage_fans_country&since=1657177200&until=1657350000",
+    "next": "https://graph.facebook.com/v14.0/101831578066144/insights?access_token=EAAImpbju5OkBAGPI8tSu0ZBZBConuBluWnZC9Q7o4nZBpRlKawrz0Ev5g9PsWZBUL4WmTlbhc0rCVEYKHTEvWlQdgOJlTmU1OQSdkZCr37DfS2EDLqQRhslgCVP0cYPAt3XiS1zm1VzdbIAgu7lKK5uZCREdV51BRO2H1SMTN7ehIV81NB3w6vz6IYaRcT9C4fdTEGNoipqZCAZDZD&pretty=0&metric=page_fans_gender_age%2Cpage_fans_country&since=1657522800&until=1657695600"
+  }
+}

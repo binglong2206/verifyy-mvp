@@ -4,20 +4,69 @@ import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import { rawListeners } from "process";
 
+interface FB_data {
+  follower_count: number;
+  like_count: number;
+  media_count: number;
+  demographics: [string, string, number][];
+  geographics: [string, number][];
+  medias: {
+    title: string;
+    view_count: number;
+    like_count: number;
+    comment_count: number;
+  }[];
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // Check csrfState
-  console.log(req.cookies);
+  // Get Code from redirect URL
+  const code = req.url?.split("code=")[1];
 
-  // console.log("log");
-  // const code = req.url?.split("code=")[1];
-  // const accessToken = await fetch(
-  //   `https://graph.facebook.com/v14.0/oauth/access_token?client_id=${process.env.FB_CLIENT_ID}&redirect_uri=http://localhost:3000/api/fb_data&client_secret=${process.env.FB_CLIENT_SECRET}&code=${code}` // it doesnt actually redirect
-  // )
-  //   .then((r) => r.json())
-  //   .then((json) => json.access_token);
+  // Get Access Token from redirected URL
+  const accessToken = await fetch(
+    `https://graph.facebook.com/v14.0/oauth/access_token?client_id=${process.env.FB_CLIENT_ID}&redirect_uri=http://localhost:3000/api/fb_data&client_secret=${process.env.FB_CLIENT_SECRET}&code=${code}` // redirect & resume back here
+  )
+    .then((r) => r.json())
+    .then((json) => json.access_token);
+
+  // Get Page ID, will have multiple page ID if user select many. Just query the first if so.
+  const pageList = await fetch(
+    `https://graph.facebook.com/v14.0/me/accounts?access_token=${accessToken}`
+  ).then((r) => r.json());
+  const pageId = pageList.data[0].id;
+
+  // Get likes & followers, fan_count -> likes
+  const { followers_count, fan_count } = await fetch(
+    `https://graph.facebook.com/v14.0/${pageId}?fields=followers_count,fan_count&access_token${accessToken}`
+  ).then((r) => r.json());
+
+  // Get Page ACCESS token to use "insights" & "published_posts" api route
+  const pageAccessToken = await fetch(
+    `https://graph.facebook.com/v14.0/${pageId}?fields=access_token&access_token${accessToken}`
+  )
+    .then((r) => r.json())
+    .then((json) => json.access_token);
+
+  // Get 5 recent post lists, along with summary total posts count
+  const post_list = await fetch(
+    `https://graph.facebook.com/v14.0/${pageId}/published_posts?summary=total_count&limit=5&fields=id&access_token${pageAccessToken}`
+  ).then((r) => r.json());
+  const media_count = post_list.summary.total_count;
+  const postIds = post_list.data.map((e: { id: string }) => {
+    return e.id;
+  });
+
+  // Get demographics & geographics
+  const agg_demographics_geographics = await fetch(
+    `https://graph.facebook.com/v14.0/${pageId}/insights?metric=page_fans_gender_age,page_fans_country&access_token${pageAccessToken}`
+  ).then((r) => r.json());
+  const demographics = agg_demographics_geographics.data[0].values[0].value;
+  const geographics = agg_demographics_geographics.data[1].values[0].value;
+
+  // Get recent 5 posts
 
   // const { name, id } = await fetch(
   //   `https://graph.facebook.com/v14.0/me/accounts?access_token=${accessToken}`
@@ -36,19 +85,15 @@ export default async function handler(
   //   `https://graph.facebook.com/v14.0/${instagramId}?fields=business_discovery.username(${name}){followers_count,media_count,media{comments_count,like_count,media_url}}&access_token=${accessToken}`
   // ).then((r) => r.json());
 
-  // console.log(queryResult);
-
-  // // Save datas in DB & redirect to dashboard that then auto request data from DB
-  // // await fetch("http://localhost:8000/fb", {
-  // //   method: "POST",
-  // //   credentials: "include",
-  // //   headers: {
-  // //     "content-type": "application/json",
-  // //   },
-  // //   body: JSON.stringify(queryResult),
-  // // })
-  // //   .then((r) => r.text())
-  // //   .then(() => res.redirect("/signup"));
-
-  res.end("whatever");
+  // Save datas in DB & redirect to dashboard that then auto request data from DB
+  // await fetch("http://localhost:8000/fb", {
+  //   method: "POST",
+  //   credentials: "include",
+  //   headers: {
+  //     "content-type": "application/json",
+  //   },
+  //   body: JSON.stringify(queryResult),
+  // })
+  //   .then((r) => r.text())
+  //   .then(() => res.redirect("/signup"));
 }

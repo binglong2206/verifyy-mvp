@@ -20,7 +20,7 @@ export default async function handler(
   url += "&redirect_uri=http://localhost:3000/api/ig_data";
   url += "&response_type=code";
   url +=
-    "&scope=instagram_basic,pages_show_list,instagram_manage_insights,pages_read_engagement";
+    "&scope=instagram_basic,pages_show_list,instagram_manage_insights,pages_read_engagement,pages_read_user_content,read_insights";
   // url += "&state=" + csrfState;
 
   res.redirect(url);

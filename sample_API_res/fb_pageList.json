@@ -1,0 +1,90 @@
+{
+  "data": [
+    {
+      "access_token": "EAAImpbju5OkBABQL5vbkqEtKI6ypZBDngdRK4a1cT86An15q2mhX98zDll6cKff621bpZAVZBNnKZAl2lo8GCPZCbKmTHJG7YILO5avrlYBNApsZBy7BN3O5ZBrVcy8gbIFmw01z2d08bVio3c834QhWS1sWyJUTrxKfV8MvJttOinhShZCA5ttM",
+      "category": "Furniture store",
+      "category_list": [
+        {
+          "id": "162845797101278",
+          "name": "Furniture store"
+        }
+      ],
+      "name": "The Glory Trading",
+      "id": "101831578066144",
+      "tasks": [
+        "ANALYZE",
+        "ADVERTISE",
+        "MESSAGING",
+        "MODERATE",
+        "CREATE_CONTENT",
+        "MANAGE"
+      ]
+    },
+    {
+      "access_token": "EAAImpbju5OkBABoLx4lHTmYAMDw2hLEYOJZBOhMCfupE6qXpir0ILpcSlKXE3hDCZCNCx0ZAEeuPbehs9SwZA5z8mSe380ItMn5VKt8y7BsZAyMg0ZBfIFSJXCEKPkDgkdabcR7pnaCukEvPZC6Yled8ly33WD6eOIB6aGMan0Ef33ZAwnpsLclb",
+      "category": "Merchandising Service",
+      "category_list": [
+        {
+          "id": "169363643109176",
+          "name": "Merchandising Service"
+        }
+      ],
+      "name": "ForFan",
+      "id": "102514171634514",
+      "tasks": [
+        "ANALYZE",
+        "ADVERTISE",
+        "MESSAGING",
+        "MODERATE",
+        "CREATE_CONTENT",
+        "MANAGE"
+      ]
+    },
+    {
+      "access_token": "EAAImpbju5OkBAMdIjvY8AdWZAPNihrBqljoFZBPIXI5fQPzyxDZBuW697isr9s86OL409CcZBBLhsZAL1ZAtzMKPvBI8cmyVbDG9sLZAdWZCSeZBmYW1gLceut0loC93XuDaZB7IlKCUXtZB2nqBBJ5WPLiC6nSPT0GzuStbUrW7tHWp51YxkrRMGnZC",
+      "category": "Health/beauty",
+      "category_list": [
+        {
+          "id": "2214",
+          "name": "Health/beauty"
+        }
+      ],
+      "name": "OmoSeoul",
+      "id": "110321963909947",
+      "tasks": [
+        "ANALYZE",
+        "ADVERTISE",
+        "MESSAGING",
+        "MODERATE",
+        "CREATE_CONTENT",
+        "MANAGE"
+      ]
+    },
+    {
+      "access_token": "EAAImpbju5OkBAAWgjtOTOiZABhbzSNAGDf6dOFyykUcKuq7cpZAVZCRerYwymWruOsRcQd6QKtG2q53dsSV5RBXHgdHee9aDSKhzMFEDlPVRFdZC2olXZAAhCyH8LBqVZC6ZBxtvqmQmUsPgqBhh7Myj9csuZCWAbyRrwGiaJ5ElItQPC7FY8BN5",
+      "category": "Digital creator",
+      "category_list": [
+        {
+          "id": "2347428775505624",
+          "name": "Digital creator"
+        }
+      ],
+      "name": "test.page2206",
+      "id": "110369741737232",
+      "tasks": [
+        "ANALYZE",
+        "ADVERTISE",
+        "MESSAGING",
+        "MODERATE",
+        "CREATE_CONTENT",
+        "MANAGE"
+      ]
+    }
+  ],
+  "paging": {
+    "cursors": {
+      "before": "MTAxODMxNTc4MDY2MTQ0",
+      "after": "MTEwMzY5NzQxNzM3MjMy"
+    }
+  }
+}
