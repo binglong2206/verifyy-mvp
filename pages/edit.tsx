@@ -46,11 +46,6 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
     fetchDashboard();
   });
 
-  const now = new Date();
-  console.log(typeof now);
-  const dog = date.format(now, "YYYY-MM-DD");
-  console.log(dog);
-
   return (
     <div className={styles.container}>
       <main className={styles.main}>
