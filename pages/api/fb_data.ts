@@ -72,6 +72,9 @@ export default async function handler(
   console.log("MEDIA_COUNT", media_count);
   console.log("5 post ids", postIds);
 
+  // Get specific post stats
+  //..........
+
   // Get demographics & geographics
   const agg_demographics_geographics = await fetch(
     `https://graph.facebook.com/v14.0/${pageId}/insights?metric=page_fans_gender_age,page_fans_country&access_token=${pageAccessToken}`
@@ -84,33 +87,4 @@ export default async function handler(
   console.log("GEOGRAPHICS", geographics);
 
   res.end();
-
-  // const { name, id } = await fetch(
-  //   `https://graph.facebook.com/v14.0/me/accounts?access_token=${accessToken}`
-  // )
-  //   .then((r) => r.json())
-  //   .then((json) => json.data[0]);
-
-  // const instagramId = await fetch(
-  //   `https://graph.facebook.com/v14.0/${id}?fields=instagram_business_account&access_token=${accessToken}`
-  // )
-  //   .then((r) => r.json())
-  //   .then((json) => json.instagram_business_account.id);
-
-  // // Start Query
-  // const queryResult = await fetch(
-  //   `https://graph.facebook.com/v14.0/${instagramId}?fields=business_discovery.username(${name}){followers_count,media_count,media{comments_count,like_count,media_url}}&access_token=${accessToken}`
-  // ).then((r) => r.json());
-
-  // Save datas in DB & redirect to dashboard that then auto request data from DB
-  // await fetch("http://localhost:8000/fb", {
-  //   method: "POST",
-  //   credentials: "include",
-  //   headers: {
-  //     "content-type": "application/json",
-  //   },
-  //   body: JSON.stringify(queryResult),
-  // })
-  //   .then((r) => r.text())
-  //   .then(() => res.redirect("/signup"));
 }
