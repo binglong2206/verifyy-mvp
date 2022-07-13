@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { getCookies } from "cookies-next";
 import { useUserStore } from "../state/useStore";
+import date from "date-and-time";
 
 interface HomeProps {
   id: number;
@@ -44,6 +45,11 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
     };
     fetchDashboard();
   });
+
+  const now = new Date();
+  console.log(typeof now);
+  const dog = date.format(now, "YYYY-MM-DD");
+  console.log(dog);
 
   return (
     <div className={styles.container}>

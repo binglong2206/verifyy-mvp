@@ -52,3 +52,71 @@
     }
   ]
 }
+
+
+
+
+
+{
+  "kind": "youtube#playlistItemListResponse",
+  "etag": "uHucwKAjiTz3JGO1KgINbVZtu3c",
+  "nextPageToken": "EAAaBlBUOkNBVQ",
+  "items": [
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "h8wB6gQWQBiSsYwSyrU0n715eAY",
+      "id": "VVVtX3pCQ2xkdWFCZmJmYjRxdldhNlhBLnkxbjE0eHhjd2Zr",
+      "contentDetails": {
+        "videoId": "y1n14xxcwfk",
+        "videoPublishedAt": "2022-07-13T09:27:57Z"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "D5RNq32FjbPK-Z_f4zLlT8wy2oE",
+      "id": "VVVtX3pCQ2xkdWFCZmJmYjRxdldhNlhBLmlRLVdzaU9UbThR",
+      "contentDetails": {
+        "videoId": "iQ-WsiOTm8Q",
+        "videoPublishedAt": "2022-07-06T12:14:53Z"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "AXDyStUFbLjCSdNHTrllQl2sqHA",
+      "id": "VVVtX3pCQ2xkdWFCZmJmYjRxdldhNlhBLjBMWFlBb3NyWnJN",
+      "contentDetails": {
+        "videoId": "0LXYAosrZrM",
+        "videoPublishedAt": "2022-06-30T10:18:51Z"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "Xf4wpGtVD5_hMo-gBirg5A55hsU",
+      "id": "VVVtX3pCQ2xkdWFCZmJmYjRxdldhNlhBLm0yN1k4TG1NblpJ",
+      "contentDetails": {
+        "videoId": "m27Y8LmMnZI",
+        "videoPublishedAt": "2022-02-27T07:00:45Z"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "hrNctTBkIXSmkzHNwislcKRNMUs",
+      "id": "VVVtX3pCQ2xkdWFCZmJmYjRxdldhNlhBLldyNzFvcWpPZ3Bn",
+      "contentDetails": {
+        "videoId": "Wr71oqjOgpg",
+        "videoPublishedAt": "2021-12-25T18:57:05Z"
+      }
+    }
+  ],
+  "pageInfo": {
+    "totalResults": 156,
+    "resultsPerPage": 5
+  }
+}
+
+
+curl \
+  'https://youtubeanalytics.googleapis.com/v2/reports?dimensions=country&endDate=2022-07-10&ids=channel%3D%3DMINE&metrics=views%2CestimatedMinutesWatched%2CaverageViewDuration%2CaverageViewPercentage%2CsubscribersGained&sort=-views&startDate=2000-05-01&key=[YOUR_API_KEY]' \
+  --header 'Authorization: Bearer [YOUR_ACCESS_TOKEN]' \
+  --header 'Accept: application/json' \
+  --compressed
