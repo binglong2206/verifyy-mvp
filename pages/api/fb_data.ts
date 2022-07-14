@@ -81,12 +81,12 @@ export default async function handler(
   const media_list: Media[] = [];
   for (let key in raw_media_list) {
     let holder: any = {};
-    holder.media_url = raw_media_list.key.permalink_url;
-    holder.img_url = raw_media_list.key.picture;
-    holder.like_count = raw_media_list.key.likes.summary.total_count;
-    holder.comment_count = raw_media_list.key.comment.summary.total_count;
+    holder.media_url = raw_media_list[key].permalink_url;
+    holder.img_url = raw_media_list[key].picture;
+    holder.like_count = raw_media_list[key].likes.summary.total_count;
+    holder.comment_count = raw_media_list[key].comments.summary.total_count;
     holder.impression_count =
-      raw_media_list.key.insights.data[0].values[0].value;
+      raw_media_list[key].insights.data[0].values[0].value;
 
     const media: Media = holder;
     media_list.push(media);

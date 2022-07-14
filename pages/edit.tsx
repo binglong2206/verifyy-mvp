@@ -54,7 +54,6 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
         <h2>User: {username}</h2>
         <h2>Email: {email}</h2>
         <button onClick={logout}>Logout</button>
-        <div>{loading ? <h1>loading...</h1> : null}</div>
         <div>
           <h3>Connect to Youtube</h3>
           <button
@@ -80,6 +79,7 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
           <Link href="/api/fb_oauth">
             <button disabled={true}>instagram</button>
           </Link>
+          <div>{loading ? <h1>loading...</h1> : null}</div>
         </div>
       </main>
     </div>
