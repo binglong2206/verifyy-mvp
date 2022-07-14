@@ -8,11 +8,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // Check csrfState
-  console.log("NEW ONE THIS ONE: ", req.cookies);
-
-  // Get Code, AccessToken, PageId, InstagramName, InstagramId
-  console.log("log");
+  // Get Code, AccessToken
   const code = req.url?.split("code=")[1];
   const accessToken = await fetch(
     `https://graph.facebook.com/v14.0/oauth/access_token?client_id=${process.env.FB_CLIENT_ID}&redirect_uri=http://localhost:3000/api/fb_data&client_secret=${process.env.FB_CLIENT_SECRET}&code=${code}` // it doesnt actually redirect
@@ -20,11 +16,12 @@ export default async function handler(
     .then((r) => r.json())
     .then((json) => json.access_token);
 
+  // Get pageName and pageId
   const { name, id } = await fetch(
     `https://graph.facebook.com/v14.0/me/accounts?access_token=${accessToken}`
   )
     .then((r) => r.json())
-    .then((json) => json.data[0]);
+    .then((json) => json.data[0]); // select first
 
   const instagramId = await fetch(
     `https://graph.facebook.com/v14.0/${id}?fields=instagram_business_account&access_token=${accessToken}`
@@ -32,12 +29,21 @@ export default async function handler(
     .then((r) => r.json())
     .then((json) => json.instagram_business_account.id);
 
-  // Start Query
-  const queryResult = await fetch(
-    `https://graph.facebook.com/v14.0/${instagramId}?fields=business_discovery.username(${name}){followers_count,media_count,media{comments_count,like_count,media_url}}&access_token=${accessToken}`
+  // Get username, follower_count, media_count, mediaIds(5)
+  const { username, followers_count, media_count, media } = await fetch(
+    `https://graph.facebook.com/v14.0/${instagramId}?fields=username,followers_count,media_count,media.limit(5){like_count,comment_count}&access_token=${accessToken}`
   ).then((r) => r.json());
 
-  console.log(queryResult);
+  // Get media stats
+
+  // Get demographics & geographics
+  const agg_demographics_geographics = await fetch(
+    `https://graph.facebook.com/v14.0/${instagramId}/insights?metric=audience_gender_age,audience_country&period=lifetime&access_token=${accessToken}`
+  )
+    .then((r) => r.json())
+    .catch((e) => console.error(e));
+  const demographics = agg_demographics_geographics.data[0].values[0].value;
+  const geographics = agg_demographics_geographics.data[1].values[0].value;
 
   // Save datas in DB & redirect to dashboard that then auto request data from DB
   await fetch("http://localhost:8000/fb", {
