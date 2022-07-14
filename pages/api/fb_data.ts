@@ -22,8 +22,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log("COOKIES: ", req.cookies);
-
   // Get Code from redirect URL
   const code = req.url?.split("code=")[1];
 
@@ -49,7 +47,6 @@ export default async function handler(
   )
     .then((r) => r.json())
     .catch((e) => console.error(e));
-  console.log("FOLLWERS, LIKES", followers_count, fan_count);
 
   // Get Page ACCESS token to use "insights" & "published_posts" api route
   const pageAccessToken = await fetch(
@@ -58,6 +55,7 @@ export default async function handler(
     .then((r) => r.json())
     .then((json) => json.access_token)
     .catch((e) => console.error(e));
+  console.log("PAGE ACCESS TOKEN", pageAccessToken);
 
   // Get 5 recent post lists, along with summary total posts count
   const post_list = await fetch(
@@ -69,33 +67,31 @@ export default async function handler(
   const postIds = post_list.data.map((e: { id: string }) => {
     return e.id;
   });
-  console.log("MEDIA_COUNT", media_count);
-  console.log("5 post ids", postIds);
+  console.log("POSTids", postIds.toString());
 
   // Get post stats -> like_count, comment_count, imprression, url, img
   const medias = await fetch(
-    `https://graph.facebook.com/v14.0/?${postIds}&fields=permalink_url,picture,likes.limit(1).summary(true),comments.limit(1).summary(true),insights.metric(post_impressions)&access_token=${pageAccessToken}`
-  );
+    `https://graph.facebook.com/v14.0/?ids=${postIds.toString()}&fields=permalink_url,picture,likes.limit(1).summary(true),comments.limit(1).summary(true),insights.metric(post_impressions)&access_token=${pageAccessToken}`
+  ).then((r) => r.json());
+  console.log("RAW MEDIA STATS LIST", medias);
 
-  // Get demographics & geographics
-  const agg_demographics_geographics = await fetch(
-    `https://graph.facebook.com/v14.0/${pageId}/insights?metric=page_fans_gender_age,page_fans_country&access_token=${pageAccessToken}`
-  )
-    .then((r) => r.json())
-    .catch((e) => console.error(e));
-  const demographics = agg_demographics_geographics.data[0].values[0].value;
-  const geographics = agg_demographics_geographics.data[1].values[0].value;
-  console.log("DEMOGRAPHICS", demographics);
-  console.log("GEOGRAPHICS", geographics);
+  // // Get demographics & geographics
+  // const agg_demographics_geographics = await fetch(
+  //   `https://graph.facebook.com/v14.0/${pageId}/insights?metric=page_fans_gender_age,page_fans_country&access_token=${pageAccessToken}`
+  // )
+  //   .then((r) => r.json())
+  //   .catch((e) => console.error(e));
+  // const demographics = agg_demographics_geographics.data[0].values[0].value;
+  // const geographics = agg_demographics_geographics.data[1].values[0].value;
 
-  const organized_data: FB_data = {
-    follower_count: followers_count,
-    like_count: fan_count,
-    media_count: media_count,
-    demographics: demographics,
-    geographics: geographics,
-    medias: [],
-  };
+  // const organized_data: FB_data = {
+  //   follower_count: followers_count,
+  //   like_count: fan_count,
+  //   media_count: media_count,
+  //   demographics: demographics,
+  //   geographics: geographics,
+  //   medias: [],
+  // };
 
-  res.end();
+  res.redirect("/redirect_edit");
 }
