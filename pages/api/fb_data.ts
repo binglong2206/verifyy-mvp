@@ -5,8 +5,8 @@ import jwt from "jsonwebtoken";
 import { rawListeners } from "process";
 
 interface Media {
+  src_url: string;
   media_url: string;
-  img_url: string;
   like_count: number;
   comment_count: number;
   impression_count: number;
@@ -80,8 +80,8 @@ export default async function handler(
   const media_list: Media[] = [];
   for (let key in raw_media_list) {
     let holder: any = {};
-    holder.media_url = raw_media_list[key].permalink_url;
-    holder.img_url = raw_media_list[key].picture;
+    holder.src_url = raw_media_list[key].permalink_url;
+    holder.media_url = raw_media_list[key].picture;
     holder.like_count = raw_media_list[key].likes.summary.total_count;
     holder.comment_count = raw_media_list[key].comments.summary.total_count;
     holder.impression_count =

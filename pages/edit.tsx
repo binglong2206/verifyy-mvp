@@ -36,10 +36,10 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
         credentials: "include",
       })
         .then((res) => res.json())
-        .then((data) => {
-          const { email } = data;
-          useUserStore.setState({ email: email });
-        })
+        // .then((data) => {
+        //   const { email } = data;
+        //   useUserStore.setState({ email: email });
+        // })
         // .then((data) => setUserState(data))
         .catch(() => console.log("cannot connect"));
     };
