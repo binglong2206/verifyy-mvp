@@ -21,13 +21,16 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log("COOKEIS: ", req.cookies);
   // Get Code, AccessToken
   const code = req.url?.split("code=")[1];
+
   const accessToken = await fetch(
-    `https://graph.facebook.com/v14.0/oauth/access_token?client_id=${process.env.FB_CLIENT_ID}&redirect_uri=http://localhost:3000/api/fb_data&client_secret=${process.env.FB_CLIENT_SECRET}&code=${code}` // it doesnt actually redirect
+    `https://graph.facebook.com/v14.0/oauth/access_token?client_id=${process.env.FB_CLIENT_ID}&redirect_uri=http://localhost:3000/api/ig_data&client_secret=${process.env.FB_CLIENT_SECRET}&code=${code}` // redirect & resume at this point
   )
     .then((r) => r.json())
     .then((json) => json.access_token);
+  console.log("ACCESS TOKEN: ", accessToken);
 
   // Get pageName and pageId
   const { name, id } = await fetch(
@@ -35,46 +38,48 @@ export default async function handler(
   )
     .then((r) => r.json())
     .then((json) => json.data[0]); // select first
+  console.log("NAME AND ID", name, id);
 
-  const instagramId = await fetch(
-    `https://graph.facebook.com/v14.0/${id}?fields=instagram_business_account&access_token=${accessToken}`
-  )
-    .then((r) => r.json())
-    .then((json) => json.instagram_business_account.id);
+  // const instagramId = await fetch(
+  //   `https://graph.facebook.com/v14.0/${id}?fields=instagram_business_account&access_token=${accessToken}`
+  // )
+  //   .then((r) => r.json())
+  //   .then((json) => json.instagram_business_account.id);
 
-  // Get username, follower_count, media_count, mediaIds(5)
-  const { username, followers_count, media_count, media } = await fetch(
-    `https://graph.facebook.com/v14.0/${instagramId}?fields=username,followers_count,media_count,media.limit(5){like_count,comment_count}&access_token=${accessToken}`
-  ).then((r) => r.json());
+  // // Get username, follower_count, media_count, mediaIds(5)
+  // const { username, followers_count, media_count, media } = await fetch(
+  //   `https://graph.facebook.com/v14.0/${instagramId}?fields=username,followers_count,media_count,media.limit(5){like_count,comment_count}&access_token=${accessToken}`
+  // ).then((r) => r.json());
 
-  // Get demographics & geographics
-  const agg_demographics_geographics = await fetch(
-    `https://graph.facebook.com/v14.0/${instagramId}/insights?metric=audience_gender_age,audience_country&period=lifetime&access_token=${accessToken}`
-  )
-    .then((r) => r.json())
-    .catch((e) => console.error(e));
-  const demographics = agg_demographics_geographics.data[0].values[0].value;
-  const geographics = agg_demographics_geographics.data[1].values[0].value;
+  // // Get demographics & geographics
+  // const agg_demographics_geographics = await fetch(
+  //   `https://graph.facebook.com/v14.0/${instagramId}/insights?metric=audience_gender_age,audience_country&period=lifetime&access_token=${accessToken}`
+  // )
+  //   .then((r) => r.json())
+  //   .catch((e) => console.error(e));
+  // const demographics = agg_demographics_geographics.data[0].values[0].value;
+  // const geographics = agg_demographics_geographics.data[1].values[0].value;
 
-  const ig_data: IG_data = {
-    username: username,
-    follower_count: followers_count,
-    media_count: media_count,
-    medias: media,
-  };
+  // const organized_data: IG_data = {
+  //   username: username,
+  //   follower_count: followers_count,
+  //   media_count: media_count,
+  //   demographics: demographics,
+  //   geographics: geographics,
+  //   medias: media,
+  // };
 
-  // Save datas in DB & redirect to dashboard that then auto request data from DB
-  await fetch("http://localhost:8000/fb", {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(queryResult),
-  })
-    .then((r) => r.text())
-    .then(() => res.redirect("/signup"));
-
-  res.redirect("/redirect_edit");
-  res.end("/");
+  // // Save datas in DB & redirect to dashboard that then auto request data from DB
+  // await fetch("http://localhost:8000/instagram", {
+  //   method: "POST",
+  //   credentials: "include",
+  //   headers: {
+  //     "content-type": "application/json",
+  //     authorization: JSON.stringify(req.cookies),
+  //   },
+  //   body: JSON.stringify(organized_data),
+  // })
+  //   .then((r) => r.text())
+  //   .then(() => res.redirect("/redirect_edit"));
+  res.end();
 }

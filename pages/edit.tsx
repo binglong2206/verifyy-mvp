@@ -69,7 +69,7 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
             <button onClick={() => setLoading(true)}>youtube2</button>
           </Link>
           <h3>Connect to Instagram</h3>
-          <Link href="/api/fb_oauth">
+          <Link href="/api/ig_oauth">
             <button onClick={() => setLoading(true)}>instagram</button>
           </Link>
           <h3>Connect to Facebook</h3>
