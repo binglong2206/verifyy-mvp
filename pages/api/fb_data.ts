@@ -8,8 +8,8 @@ interface FB_data {
   follower_count: number;
   like_count: number;
   media_count: number;
-  demographics: [string, string, number][];
-  geographics: [string, number][];
+  demographics: any; // refer to fb_demo_geo.json
+  geographics: any; // refer to fb_demo_geo.json
   medias: {
     title: string;
     view_count: number;
@@ -72,8 +72,10 @@ export default async function handler(
   console.log("MEDIA_COUNT", media_count);
   console.log("5 post ids", postIds);
 
-  // Get specific post stats
-  //..........
+  // Get post stats -> like_count, comment_count, imprression, url, img
+  const medias = await fetch(
+    `https://graph.facebook.com/v14.0/?${postIds}&fields=permalink_url,picture,likes.limit(1).summary(true),comments.limit(1).summary(true),insights.metric(post_impressions)&access_token=${pageAccessToken}`
+  );
 
   // Get demographics & geographics
   const agg_demographics_geographics = await fetch(
@@ -85,6 +87,15 @@ export default async function handler(
   const geographics = agg_demographics_geographics.data[1].values[0].value;
   console.log("DEMOGRAPHICS", demographics);
   console.log("GEOGRAPHICS", geographics);
+
+  const organized_data: FB_data = {
+    follower_count: followers_count,
+    like_count: fan_count,
+    media_count: media_count,
+    demographics: demographics,
+    geographics: geographics,
+    medias: [],
+  };
 
   res.end();
 }
