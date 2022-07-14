@@ -4,6 +4,19 @@ import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import { rawListeners } from "process";
 
+interface IG_data {
+  username: string;
+  follower_count: number;
+  media_count: number;
+  demographics: any; // refer to ig_demo_geo.json
+  geographics: any; // refer to ig_demo_geo.json
+  medias: {
+    like_count: string;
+    id: string;
+    media_url: string;
+  }[];
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -34,8 +47,6 @@ export default async function handler(
     `https://graph.facebook.com/v14.0/${instagramId}?fields=username,followers_count,media_count,media.limit(5){like_count,comment_count}&access_token=${accessToken}`
   ).then((r) => r.json());
 
-  // Get media stats
-
   // Get demographics & geographics
   const agg_demographics_geographics = await fetch(
     `https://graph.facebook.com/v14.0/${instagramId}/insights?metric=audience_gender_age,audience_country&period=lifetime&access_token=${accessToken}`
@@ -44,6 +55,13 @@ export default async function handler(
     .catch((e) => console.error(e));
   const demographics = agg_demographics_geographics.data[0].values[0].value;
   const geographics = agg_demographics_geographics.data[1].values[0].value;
+
+  const ig_data: IG_data = {
+    username: username,
+    follower_count: followers_count,
+    media_count: media_count,
+    medias: media,
+  };
 
   // Save datas in DB & redirect to dashboard that then auto request data from DB
   await fetch("http://localhost:8000/fb", {
