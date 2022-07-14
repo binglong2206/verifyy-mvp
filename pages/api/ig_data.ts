@@ -48,19 +48,21 @@ export default async function handler(
 
   // Get username, follower_count, media_count, mediaIds(5)
   const { username, followers_count, media_count, media } = await fetch(
-    `https://graph.facebook.com/v14.0/${instagramId}?fields=username,followers_count,media_count,media.limit(5){like_count,comment_count}&access_token=${accessToken}`
+    `https://graph.facebook.com/v14.0/${instagramId}?fields=username,followers_count,media_count,media.limit(5){like_count,comment_count,media_url}&access_token=${accessToken}`
   ).then((r) => r.json());
 
   console.log("BASIC STAT: ", username, followers_count, media_count, media);
 
-  // // Get demographics & geographics
-  // const agg_demographics_geographics = await fetch(
-  //   `https://graph.facebook.com/v14.0/${instagramId}/insights?metric=audience_gender_age,audience_country&period=lifetime&access_token=${accessToken}`
-  // )
-  //   .then((r) => r.json())
-  //   .catch((e) => console.error(e));
-  // const demographics = agg_demographics_geographics.data[0].values[0].value;
-  // const geographics = agg_demographics_geographics.data[1].values[0].value;
+  // Get demographics & geographics
+  const agg_demographics_geographics = await fetch(
+    `https://graph.facebook.com/v14.0/${instagramId}/insights?metric=audience_gender_age,audience_country&period=lifetime&access_token=${accessToken}`
+  )
+    .then((r) => r.json())
+    .catch((e) => console.error(e));
+  const demographics = agg_demographics_geographics.data[0].values[0].value;
+  const geographics = agg_demographics_geographics.data[1].values[0].value;
+
+  console.log("DEMO AND GEO: ", demographics, geographics);
 
   // const organized_data: IG_data = {
   //   username: username,
