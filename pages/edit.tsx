@@ -56,16 +56,8 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
         <button onClick={logout}>Logout</button>
         <div>
           <h3>Connect to Youtube</h3>
-          <button
-            onClick={() => {
-              setLoading(true);
-              Router.push("/api/yt_oauth");
-            }}
-          >
-            youtube
-          </button>
           <Link href="/api/yt_oauth">
-            <button onClick={() => setLoading(true)}>youtube2</button>
+            <button onClick={() => setLoading(true)}>youtube</button>
           </Link>
           <h3>Connect to Instagram</h3>
           <Link href="/api/ig_oauth">

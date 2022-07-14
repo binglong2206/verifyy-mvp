@@ -58,7 +58,6 @@ export default async function handler(
     .then((r) => r.json())
     .then((json) => json.access_token)
     .catch((e) => console.error(e));
-  console.log("PAGE ACCESS TOKEN", pageAccessToken);
 
   // Get 5 recent post lists, along with summary total posts count
   const post_list = await fetch(
@@ -70,7 +69,6 @@ export default async function handler(
   const postIds = post_list.data.map((e: { id: string }) => {
     return e.id;
   });
-  console.log("POSTids", postIds.toString());
 
   // Get all media stats -> like_count, comment_count, imprression, url, img
   const raw_media_list = await fetch(
@@ -110,7 +108,13 @@ export default async function handler(
     medias: media_list,
   };
 
-  console.log(organized_data);
-
-  res.redirect("/redirect_edit");
+  await fetch("http://localhost:8000/facebook", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "content-type": "application/json",
+      authorization: JSON.stringify(req.cookies),
+    },
+    body: JSON.stringify(organized_data),
+  }).then(() => res.redirect("/redirect_edit"));
 }
