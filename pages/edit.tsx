@@ -36,6 +36,7 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
         credentials: "include",
       })
         .then((res) => res.json())
+        .then((data) => console.log(data))
         // .then((data) => {
         //   const { email } = data;
         //   useUserStore.setState({ email: email });
