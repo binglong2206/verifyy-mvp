@@ -64,14 +64,16 @@ export default async function handler(
 
   console.log("DEMO AND GEO: ", demographics, geographics);
 
-  // const organized_data: IG_data = {
-  //   username: username,
-  //   follower_count: followers_count,
-  //   media_count: media_count,
-  //   demographics: demographics,
-  //   geographics: geographics,
-  //   medias: media,
-  // };
+  const organized_data: IG_data = {
+    username: username,
+    follower_count: followers_count,
+    media_count: media_count,
+    demographics: demographics,
+    geographics: geographics,
+    medias: media.data,
+  };
+
+  console.log("FINALLLLLLLLLLLLLLLLLLLLLLLLLLLLL: ", organized_data);
 
   // // Save datas in DB & redirect to dashboard that then auto request data from DB
   // await fetch("http://localhost:8000/instagram", {
