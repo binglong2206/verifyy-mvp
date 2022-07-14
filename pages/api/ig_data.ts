@@ -21,7 +21,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log("COOKEIS: ", req.cookies);
   // Get Code, AccessToken
   const code = req.url?.split("code=")[1];
 
@@ -30,7 +29,6 @@ export default async function handler(
   )
     .then((r) => r.json())
     .then((json) => json.access_token);
-  console.log("ACCESS TOKEN: ", accessToken);
 
   // Get pageName and pageId to get instagramID
   const { name, id } = await fetch(
@@ -38,7 +36,6 @@ export default async function handler(
   )
     .then((r) => r.json())
     .then((json) => json.data[0]); // select first
-  console.log("NAME AND ID", name, id);
 
   const instagramId = await fetch(
     `https://graph.facebook.com/v14.0/${id}?fields=instagram_business_account&access_token=${accessToken}`
@@ -51,8 +48,6 @@ export default async function handler(
     `https://graph.facebook.com/v14.0/${instagramId}?fields=username,followers_count,media_count,media.limit(5){like_count,comment_count,media_url}&access_token=${accessToken}`
   ).then((r) => r.json());
 
-  console.log("BASIC STAT: ", username, followers_count, media_count, media);
-
   // Get demographics & geographics
   const agg_demographics_geographics = await fetch(
     `https://graph.facebook.com/v14.0/${instagramId}/insights?metric=audience_gender_age,audience_country&period=lifetime&access_token=${accessToken}`
@@ -62,8 +57,6 @@ export default async function handler(
   const demographics = agg_demographics_geographics.data[0].values[0].value;
   const geographics = agg_demographics_geographics.data[1].values[0].value;
 
-  console.log("DEMO AND GEO: ", demographics, geographics);
-
   const organized_data: IG_data = {
     username: username,
     follower_count: followers_count,
@@ -72,20 +65,16 @@ export default async function handler(
     geographics: geographics,
     medias: media.data,
   };
+  // console.log('ORGANIZED IG DATA: ', organized_data)
 
-  console.log("FINALLLLLLLLLLLLLLLLLLLLLLLLLLLLL: ", organized_data);
-
-  // // Save datas in DB & redirect to dashboard that then auto request data from DB
-  // await fetch("http://localhost:8000/instagram", {
-  //   method: "POST",
-  //   credentials: "include",
-  //   headers: {
-  //     "content-type": "application/json",
-  //     authorization: JSON.stringify(req.cookies),
-  //   },
-  //   body: JSON.stringify(organized_data),
-  // })
-  //   .then((r) => r.text())
-  //   .then(() => res.redirect("/redirect_edit"));
-  res.redirect("/redirect_edit");
+  // Post DB to let controller insert, redirect to edit to then query inserted data
+  await fetch("http://localhost:8000/instagram", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "content-type": "application/json",
+      authorization: JSON.stringify(req.cookies),
+    },
+    body: JSON.stringify(organized_data),
+  }).then(() => res.redirect("/redirect_edit"));
 }
