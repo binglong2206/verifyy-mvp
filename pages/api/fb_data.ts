@@ -4,18 +4,21 @@ import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import { rawListeners } from "process";
 
+interface Media {
+  media_url: string;
+  img_url: string;
+  like_count: number;
+  comment_count: number;
+  impression_count: number;
+}
+
 interface FB_data {
   follower_count: number;
   like_count: number;
   media_count: number;
   demographics: any; // refer to fb_demo_geo.json
   geographics: any; // refer to fb_demo_geo.json
-  medias: {
-    title: string;
-    view_count: number;
-    like_count: number;
-    comment_count: number;
-  }[];
+  medias: Media[];
 }
 
 export default async function handler(
@@ -69,29 +72,45 @@ export default async function handler(
   });
   console.log("POSTids", postIds.toString());
 
-  // Get post stats -> like_count, comment_count, imprression, url, img
-  const medias = await fetch(
+  // Get all media stats -> like_count, comment_count, imprression, url, img
+  const raw_media_list = await fetch(
     `https://graph.facebook.com/v14.0/?ids=${postIds.toString()}&fields=permalink_url,picture,likes.limit(1).summary(true),comments.limit(1).summary(true),insights.metric(post_impressions)&access_token=${pageAccessToken}`
   ).then((r) => r.json());
-  console.log("RAW MEDIA STATS LIST", medias);
 
-  // // Get demographics & geographics
-  // const agg_demographics_geographics = await fetch(
-  //   `https://graph.facebook.com/v14.0/${pageId}/insights?metric=page_fans_gender_age,page_fans_country&access_token=${pageAccessToken}`
-  // )
-  //   .then((r) => r.json())
-  //   .catch((e) => console.error(e));
-  // const demographics = agg_demographics_geographics.data[0].values[0].value;
-  // const geographics = agg_demographics_geographics.data[1].values[0].value;
+  // Organize medias query -> {id, url, picture, like_count, comment_count, impression_count}[]
+  const media_list: Media[] = [];
+  for (let key in raw_media_list) {
+    let holder: any = {};
+    holder.media_url = raw_media_list.key.permalink_url;
+    holder.img_url = raw_media_list.key.picture;
+    holder.like_count = raw_media_list.key.likes.summary.total_count;
+    holder.comment_count = raw_media_list.key.comment.summary.total_count;
+    holder.impression_count =
+      raw_media_list.key.insights.data[0].values[0].value;
 
-  // const organized_data: FB_data = {
-  //   follower_count: followers_count,
-  //   like_count: fan_count,
-  //   media_count: media_count,
-  //   demographics: demographics,
-  //   geographics: geographics,
-  //   medias: [],
-  // };
+    const media: Media = holder;
+    media_list.push(media);
+  }
+
+  // Get demographics & geographics
+  const agg_demographics_geographics = await fetch(
+    `https://graph.facebook.com/v14.0/${pageId}/insights?metric=page_fans_gender_age,page_fans_country&access_token=${pageAccessToken}`
+  )
+    .then((r) => r.json())
+    .catch((e) => console.error(e));
+  const demographics = agg_demographics_geographics.data[0].values[0].value;
+  const geographics = agg_demographics_geographics.data[1].values[0].value;
+
+  const organized_data: FB_data = {
+    follower_count: followers_count,
+    like_count: fan_count,
+    media_count: media_count,
+    demographics: demographics,
+    geographics: geographics,
+    medias: media_list,
+  };
+
+  console.log(organized_data);
 
   res.redirect("/redirect_edit");
 }
