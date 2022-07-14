@@ -32,7 +32,7 @@ export default async function handler(
     .then((json) => json.access_token);
   console.log("ACCESS TOKEN: ", accessToken);
 
-  // Get pageName and pageId
+  // Get pageName and pageId to get instagramID
   const { name, id } = await fetch(
     `https://graph.facebook.com/v14.0/me/accounts?access_token=${accessToken}`
   )
@@ -40,16 +40,18 @@ export default async function handler(
     .then((json) => json.data[0]); // select first
   console.log("NAME AND ID", name, id);
 
-  // const instagramId = await fetch(
-  //   `https://graph.facebook.com/v14.0/${id}?fields=instagram_business_account&access_token=${accessToken}`
-  // )
-  //   .then((r) => r.json())
-  //   .then((json) => json.instagram_business_account.id);
+  const instagramId = await fetch(
+    `https://graph.facebook.com/v14.0/${id}?fields=instagram_business_account&access_token=${accessToken}`
+  )
+    .then((r) => r.json())
+    .then((json) => json.instagram_business_account.id);
 
-  // // Get username, follower_count, media_count, mediaIds(5)
-  // const { username, followers_count, media_count, media } = await fetch(
-  //   `https://graph.facebook.com/v14.0/${instagramId}?fields=username,followers_count,media_count,media.limit(5){like_count,comment_count}&access_token=${accessToken}`
-  // ).then((r) => r.json());
+  // Get username, follower_count, media_count, mediaIds(5)
+  const { username, followers_count, media_count, media } = await fetch(
+    `https://graph.facebook.com/v14.0/${instagramId}?fields=username,followers_count,media_count,media.limit(5){like_count,comment_count}&access_token=${accessToken}`
+  ).then((r) => r.json());
+
+  console.log("BASIC STAT: ", username, followers_count, media_count, media);
 
   // // Get demographics & geographics
   // const agg_demographics_geographics = await fetch(
@@ -81,5 +83,5 @@ export default async function handler(
   // })
   //   .then((r) => r.text())
   //   .then(() => res.redirect("/redirect_edit"));
-  res.end();
+  res.redirect("/redirect_edit");
 }
