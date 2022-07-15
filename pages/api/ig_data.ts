@@ -11,9 +11,11 @@ interface IG_data {
   demographics: any; // refer to ig_demo_geo.json
   geographics: any; // refer to ig_demo_geo.json
   medias: {
-    like_count: string;
     id: string;
+    like_count: number;
+    comment_count: number;
     media_url: string;
+    src_url: string;
   }[];
 }
 
