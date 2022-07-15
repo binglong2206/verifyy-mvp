@@ -37,7 +37,7 @@ export default async function handler(
     `https://graph.facebook.com/v14.0/me/accounts?access_token=${accessToken}`
   )
     .then((r) => r.json())
-    .then((json) => json.data[1]); // select first
+    .then((json) => json.data[1]); // ForFan.co Page
 
   const instagramId = await fetch(
     `https://graph.facebook.com/v14.0/${id}?fields=instagram_business_account&access_token=${accessToken}`

@@ -5,8 +5,8 @@ import jwt from "jsonwebtoken";
 import { rawListeners } from "process";
 
 interface Media {
-  src_url: string;
   media_url: string;
+  src_url: string;
   like_count: number;
   comment_count: number;
   impression_count: number;
@@ -43,7 +43,7 @@ export default async function handler(
     .then((r) => r.json())
     .catch((e) => console.error(e));
   console.log(pageList);
-  const pageId = pageList.data[0].id;
+  const pageId = pageList.data[0].id; // Glory Trading Page
 
   // Get followers & likes, fan_count -> likes
   const { followers_count, fan_count } = await fetch(
