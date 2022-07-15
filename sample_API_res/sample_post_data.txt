@@ -1,0 +1,220 @@
+YOUTUBE:
+{
+  subscriber_count: '0',
+  view_count: '1',
+  upload_count: '1',
+  demographics: [],
+  geographics: [ [ 'TH', 0, 0, 0, 0, 0 ] ],
+  medias: [
+    {
+      title: 'a quick 30 second test!!!!!!!!!!!!',
+      view_count: '1',
+      like_count: '0',
+      comment_count: '0'
+    }
+  ]
+}
+
+
+
+
+INSTAGRAM
+{
+  username: 'forfan.co',
+  follower_count: 301,
+  media_count: 9,
+  demographics: {
+    'F.18-24': 2,
+    'F.25-34': 5,
+    'F.35-44': 6,
+    'F.45-54': 7,
+    'F.55-64': 2,
+    'F.65+': 2,
+    'M.18-24': 7,
+    'M.25-34': 12,
+    'M.35-44': 10,
+    'M.45-54': 4,
+    'M.55-64': 4,
+    'M.65+': 6,
+    'U.18-24': 4,
+    'U.25-34': 6,
+    'U.35-44': 16,
+    'U.45-54': 1,
+    'U.55-64': 4
+  },
+  geographics: {
+    DE: 5,
+    HK: 1,
+    TW: 1,
+    RU: 7,
+    JP: 3,
+    HR: 1,
+    UA: 1,
+    NZ: 1,
+    FR: 7,
+    BR: 3,
+    SG: 1,
+    ID: 2,
+    GB: 9,
+    US: 18,
+    AE: 1,
+    CH: 1,
+    IN: 1,
+    KR: 1,
+    IQ: 1,
+    CL: 1,
+    GR: 1,
+    MX: 1,
+    CO: 2,
+    MY: 2,
+    ES: 3,
+    VE: 1,
+    CR: 1,
+    AR: 4,
+    AT: 1,
+    AU: 2,
+    TH: 4,
+    PE: 1,
+    CY: 1,
+    PH: 1,
+    VN: 2,
+    PL: 2,
+    TR: 1,
+    LK: 2
+  },
+  medias: [
+    {
+      like_count: 1,
+      media_url: 'https://scontent.cdninstagram.com/v/t51.29350-15/125261555_216847393144832_4809045067839587736_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=8ae9d6&_nc_eui2=AeE1qYVWHU92r_Y6otfA387HdDjHgPn58vp0OMeA-fny-jTpYAi7sBLG9MvdAx3mfXw&_nc_ohc=9KTSR24nlfsAX_3WcUa&_nc_ht=scontent.cdninstagram.com&edm=AL-3X8kEAAAA&oh=00_AT-qvWTiha47QopwrR3W4pMADesPSxtGhg_UtpsaGiuA8g&oe=62D4CD97',
+      id: '17916882007479997'
+    },
+    {
+      like_count: 1,
+      media_url: 'https://scontent.cdninstagram.com/v/t51.29350-15/125244744_169037251357458_5201016707598060634_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8ae9d6&_nc_eui2=AeG5isS84mU8KxAqnSf98b-j_Q0T1c9O-XD9DRPVz075cLZzI0R6UGJIo9qToLC8Er8&_nc_ohc=ftXvFeRz2qsAX8voLRO&_nc_ht=scontent.cdninstagram.com&edm=AL-3X8kEAAAA&oh=00_AT_O9rzYkkxFAuS4_I0FYo5dhigkGjuTjVzoLPUQSVPTMQ&oe=62D556B8',
+      id: '17969978620337285'
+    },
+    {
+      like_count: 0,
+      media_url: 'https://scontent.cdninstagram.com/v/t51.29350-15/124904982_194527972156261_3492562228839571079_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=8ae9d6&_nc_eui2=AeGMWB42stRLHT2rPI2AfY8_Dq6W45YlVqAOrpbjliVWoLbbcNUfvlCQr0Wk2TrwFE8&_nc_ohc=8HGLernNZFUAX8-oWb5&_nc_ht=scontent.cdninstagram.com&edm=AL-3X8kEAAAA&oh=00_AT8BUKiVMTh3mv-Glwta1t7J-Q6y5uIqPxN53e_PpYQb0g&oe=62D5102A',
+      id: '17899446766620267'
+    },
+    {
+      like_count: 0,
+      media_url: 'https://scontent.cdninstagram.com/v/t51.29350-15/125216068_156050496212288_3446492311410877770_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8ae9d6&_nc_eui2=AeGVhai00t3s53f51mGTFO5vQLpuagHkWIpAum5qAeRYitpBHqjQ5xj3Hu6SPWeYpsU&_nc_ohc=nLD84HayL-cAX9lmPtt&_nc_ht=scontent.cdninstagram.com&edm=AL-3X8kEAAAA&oh=00_AT8PnhnFEb262l9pH7vvqXn_qjM1AGrbE4jr8nG30RIYkg&oe=62D413AE',
+      id: '17966959033347152'
+    },
+    {
+      like_count: 0,
+      media_url: 'https://scontent.cdninstagram.com/v/t51.29350-15/125007301_394881288318135_6457633954201885222_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=8ae9d6&_nc_eui2=AeH91GPwwNPcz4iaKdOqldY_j6DSBsCRSsuPoNIGwJFKy9TjaWmR81-aihxfaECYswA&_nc_ohc=MSzOybHO1SoAX8EMNOC&_nc_ht=scontent.cdninstagram.com&edm=AL-3X8kEAAAA&oh=00_AT-PV1NjFDtHYLV8ATMxuKnJB2sapdQlwakLwEKW9GfrzQ&oe=62D5C9C3',
+      id: '17885221633799685'
+    }
+  ]
+}
+
+
+
+
+FACEBOOK
+{
+  follower_count: 127,
+  like_count: 127,
+  media_count: 25,
+  demographics: {
+    'M.25-34': 37,
+    'F.65+': 1,
+    'F.55-64': 5,
+    'M.55-64': 4,
+    'M.65+': 3,
+    'F.35-44': 6,
+    'M.18-24': 3,
+    'M.35-44': 29,
+    'M.45-54': 19,
+    'F.18-24': 1,
+    'F.25-34': 19
+  },
+  geographics: { CN: 1, MY: 7, TH: 118, KH: 1 },
+  medias: [
+    {
+      media_url: 'https://www.facebook.com/101831578066144/posts/140783914170910/',
+      img_url: 'https://scontent.fbkk29-2.fna.fbcdn.net/v/t1.6435-9/94432430_140783847504250_8031605598187421696_n.jpg?stp=dst-jpg_s130x130&_nc_cat=108&ccb=1-7&_nc_sid=110474&_nc_eui2=AeHILz1WvNsu81Wma_9NXlUgZ_bTtXZ1CNxn9tO1dnUI3GyR1cs_9A8qAA20vCdVpOQ&_nc_ohc=OF7BCPzXq38AX8Pjf8l&_nc_ht=scontent.fbkk29-2.fna&edm=AJfPMC4EAAAA&oh=00_AT-SFDl2dr84AMBWgaTnH7sZe1qmBjppRAXWFOh9jGHGow&oe=62F5425D',
+      like_count: 3,
+      comment_count: 0,
+      impression_count: 146
+    },
+    {
+      media_url: 'https://www.facebook.com/101831578066144/posts/139801274269174/',
+      img_url: 'https://scontent.fbkk29-1.fna.fbcdn.net/v/t1.6435-9/94035859_139801204269181_1874891071679365120_n.jpg?stp=dst-jpg_p130x130&_nc_cat=101&ccb=1-7&_nc_sid=110474&_nc_eui2=AeFpG39dgPpNRVG9vPycfiSgLzBRX3HXpEgvMFFfcdekSGw1o8QKNqYNZIZce566roo&_nc_ohc=XK6I6l_QCiAAX_zyPLb&_nc_ht=scontent.fbkk29-1.fna&edm=AJfPMC4EAAAA&oh=00_AT8ZpvZqR5z5Ag7pfCxfy5xavQUs4tGqw3-DEiZGX7juJA&oe=62F4928B',
+      like_count: 3,
+      comment_count: 0,
+      impression_count: 102
+    },
+    {
+      media_url: 'https://www.facebook.com/101831578066144/posts/134048808177754/',
+      img_url: 'https://scontent.fbkk29-1.fna.fbcdn.net/v/t1.6435-9/92354557_134048758177759_8456125332569718784_n.jpg?stp=dst-jpg_s130x130&_nc_cat=100&ccb=1-7&_nc_sid=110474&_nc_eui2=AeFsamjjog9U-glGITCPQk-CPqFd9NnQolU-oV302dCiVauHNsdXl5ufaVbHusNz19U&_nc_ohc=yL8Ky2bfvFIAX-nCFQC&_nc_ht=scontent.fbkk29-1.fna&edm=AJfPMC4EAAAA&oh=00_AT8fAQ73_ry7ia11RNhb9KMSxUhNH1Cmw-IQ-cLwHeo_ug&oe=62F5B0D6',
+      like_count: 1,
+      comment_count: 0,
+      impression_count: 97
+    },
+    {
+      media_url: 'https://www.facebook.com/101831578066144/posts/132300141685954/',
+      img_url: 'https://scontent.fbkk29-2.fna.fbcdn.net/v/t1.6435-9/91226746_132299825019319_5127052321234092032_n.jpg?stp=dst-jpg_s130x130&_nc_cat=108&ccb=1-7&_nc_sid=110474&_nc_eui2=AeHQzTv-jnabd13A-H2vexznKDv_Z5DikR8oO_9nkOKRH0eoWOMxQnKCyIO_HyME1Yc&_nc_ohc=Pj4iKOliwJUAX_zo_ru&_nc_ht=scontent.fbkk29-2.fna&edm=AJfPMC4EAAAA&oh=00_AT9sTpxDDLFHPhlI_IBR_4BzninEpczLbqw3kQdnoP5J-A&oe=62F71617',
+      like_count: 3,
+      comment_count: 1,
+      impression_count: 86
+    },
+    {
+      media_url: 'https://www.facebook.com/101831578066144/posts/129604791955489/',
+      img_url: 'https://scontent.fbkk29-1.fna.fbcdn.net/v/t1.6435-9/90912910_129604578622177_5166790204765241344_n.jpg?stp=dst-jpg_s130x130&_nc_cat=102&ccb=1-7&_nc_sid=110474&_nc_eui2=AeGv_zO9PMQGghVRcDSDQERLNXj38z9YzX41ePfzP1jNfjsCXlEhKt8cXOsF7XW30wA&_nc_ohc=-lqVTXJfxQAAX80z5X7&_nc_ht=scontent.fbkk29-1.fna&edm=AJfPMC4EAAAA&oh=00_AT_GPlw6IXRZMeGdU3OFezFZu4T_5393TRUk6GWemT1SXw&oe=62F5FCAA',
+      like_count: 1,
+      comment_count: 0,
+      impression_count: 78
+    }
+  ]
+}
+
+
+
+SCHEMA
+YOUTUBE:
+- subscriber_count
+- view_count
+- upload_count
+- demographics 
+- geographics
+* media -> [{title, view_count, like_count, comment_count}]
+
+INSTAGRAM
+- username
+- follower_count
+- media_count
+- demographics
+- geographics
+* medias -> [{like_count, media_url}]
+
+FACEBOOK
+- follower_count
+- like_count
+- media_count
+- demographics
+- geographics
+* medias -> [{src_url, media_url, like_count, comment_count, impression_count}]
+
+
+ACCOUNT STAT
+
+
+
+
+GET FROM DB:
+ YOUTUBE
+ YT_account {
+  id: 1,
+  subscriber_count: 0,
+  view_count: 1,
+  upload_count: 1,
+  demographics: [],
+  geographics: [ [ 'TH', 0, 0, 0, 0, 0 ] ],
+  created: 2022-07-14T15:04:30.140Z,
+  updated: 2022-07-14T15:28:37.166Z
+}
+

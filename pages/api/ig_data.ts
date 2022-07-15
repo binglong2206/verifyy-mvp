@@ -44,9 +44,16 @@ export default async function handler(
     .then((json) => json.instagram_business_account.id);
 
   // Get username, follower_count, media_count, mediaIds(5)
-  const { username, followers_count, media_count, media } = await fetch(
-    `https://graph.facebook.com/v14.0/${instagramId}?fields=username,followers_count,media_count,media.limit(5){like_count,comment_count,media_url}&access_token=${accessToken}`
+  const { username, followers_count, media_count } = await fetch(
+    `https://graph.facebook.com/v14.0/${instagramId}?fields=username,followers_count,media_count&access_token=${accessToken}`
   ).then((r) => r.json());
+
+  // Get media list
+  const medias = await fetch(
+    `https://graph.facebook.com/v14.0/${instagramId}/media?fields=like_count,comments_count,media_url,permalink&limit=5&access_token=${accessToken}`
+  )
+    .then((r) => r.json())
+    .then((json) => json.data);
 
   // Get demographics & geographics
   const agg_demographics_geographics = await fetch(
@@ -63,7 +70,7 @@ export default async function handler(
     media_count: media_count,
     demographics: demographics,
     geographics: geographics,
-    medias: media.data,
+    medias: medias,
   };
   // console.log('ORGANIZED IG DATA: ', organized_data)
 
