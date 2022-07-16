@@ -30,22 +30,22 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
     Router.push("/");
   };
 
-  useEffect(() => {
-    const fetchDashboard = async () => {
-      await fetch(`http://localhost:8000/dashboard/${id}`, {
-        credentials: "include",
-      })
-        .then((res) => res.json())
-        .then((data) => console.log(data))
-        // .then((data) => {
-        //   const { email } = data;
-        //   useUserStore.setState({ email: email });
-        // })
-        // .then((data) => setUserState(data))
-        .catch(() => console.log("cannot connect"));
-    };
-    fetchDashboard();
-  });
+  // useEffect(() => {
+  //   const fetchDashboard = async () => {
+  //     await fetch(`http://localhost:8000/dashboard/${id}`, {
+  //       credentials: "include",
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => console.log(data))
+  //       // .then((data) => {
+  //       //   const { email } = data;
+  //       //   useUserStore.setState({ email: email });
+  //       // })
+  //       // .then((data) => setUserState(data))
+  //       .catch(() => console.log("cannot connect"));
+  //   };
+  //   fetchDashboard();
+  // });
 
   return (
     <div className={styles.container}>
