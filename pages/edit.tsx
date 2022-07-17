@@ -36,9 +36,9 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
       await fetch(`http://localhost:8000/dashboard/${id}`, {
         credentials: "include",
       })
-        .then((res) => res.json()) // Reads the json doens't pasrse yet
+        .then((res) => res.json()) 
         .then((data) => {
-          setJson(JSON.parse(data));
+          setJson(data);
         })
         .catch(() => console.log("cannot connect"));
     };
