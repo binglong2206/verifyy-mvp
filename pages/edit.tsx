@@ -20,6 +20,7 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
   const email = useUserStore((state) => state.email);
   const setUserState = useUserStore((state) => state.setUserState);
   const [loading, setLoading] = useState(false);
+  const [json, setJson] = useState<any>('');
 
   const logout = async () => {
     const res = await fetch("http://localhost:8000/logout", {
@@ -30,22 +31,19 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
     Router.push("/");
   };
 
-  // useEffect(() => {
-  //   const fetchDashboard = async () => {
-  //     await fetch(`http://localhost:8000/dashboard/${id}`, {
-  //       credentials: "include",
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => console.log(data))
-  //       // .then((data) => {
-  //       //   const { email } = data;
-  //       //   useUserStore.setState({ email: email });
-  //       // })
-  //       // .then((data) => setUserState(data))
-  //       .catch(() => console.log("cannot connect"));
-  //   };
-  //   fetchDashboard();
-  // });
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      await fetch(`http://localhost:8000/dashboard/${id}`, {
+        credentials: "include",
+      })
+        .then((res) => res.json()) // Reads the json doens't pasrse yet
+        .then((data) => {
+          setJson(JSON.parse(data));
+        })
+        .catch(() => console.log("cannot connect"));
+    };
+    fetchDashboard();
+  },[])
 
   return (
     <div className={styles.container}>
@@ -55,6 +53,14 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
         <h2>User: {username}</h2>
         <h2>Email: {email}</h2>
         <button onClick={logout}>Logout</button>
+        <h3>Youtube Data: </h3>
+        <div>{JSON.stringify(json.yt)}</div>
+        <h3>Instagram Data </h3>
+        <div>{JSON.stringify(json.ig)}</div>
+        <h3>Facebook Data </h3>
+        <div>{JSON.stringify(json.fb)}</div>
+
+
         <div>
           <h3>Connect to Youtube</h3>
           <Link href="/api/yt_oauth">
