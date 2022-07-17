@@ -5,10 +5,7 @@ import styles from "../styles/Home.module.css";
 import cookie from "cookie";
 import authMiddleware from "../utils/auth";
 import Router from "next/router";
-import { useRouter } from "next/router";
-import axios from "axios";
-import { getCookies } from "cookies-next";
-import { useUserStore } from "../state/useStore";
+import { useUserStore, useYoutubeStore, useInstagramStore, useFacebookStore } from "../state/useStore";
 import date from "date-and-time";
 
 interface HomeProps {
@@ -17,10 +14,13 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ id, username }) => {
-  const email = useUserStore((state) => state.email);
-  const setUserState = useUserStore((state) => state.setUserState);
+  const setYoutubeState = useYoutubeStore(state=>state.setYoutubeState)
+  const setInstagramState = useInstagramStore(state=> state.setInstagramState)
+  const setFacebookState = useFacebookStore(state=>state.setFacebookState)
+  const youtubeState = useYoutubeStore(state=> state);
+  const instagramState = useInstagramStore(state=>state);
+  const facebookState = useFacebookStore(state=>state)
   const [loading, setLoading] = useState(false);
-  const [json, setJson] = useState<any>('');
 
   const logout = async () => {
     const res = await fetch("http://localhost:8000/logout", {
@@ -38,12 +38,20 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
       })
         .then((res) => res.json()) 
         .then((data) => {
-          setJson(data);
+          setYoutubeState(data.yt);
+          setInstagramState(data.ig)
+          setFacebookState(data.fb)
         })
         .catch(() => console.log("cannot connect"));
     };
     fetchDashboard();
   },[])
+
+  const showStateData = () => {
+    console.log('Youtube', youtubeState);
+    console.log('Instagram', instagramState)
+    console.log('Facebook', facebookState)
+  };
 
   return (
     <div className={styles.container}>
@@ -51,15 +59,16 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
         <h1 className={styles.title}>DASHBOARD</h1>
         <h2>ID: {id}</h2>
         <h2>User: {username}</h2>
-        <h2>Email: {email}</h2>
+
         <button onClick={logout}>Logout</button>
         <h3>Youtube Data: </h3>
-        <div>{JSON.stringify(json.yt)}</div>
+        <div>{youtubeState.upload_count}</div>
         <h3>Instagram Data </h3>
-        <div>{JSON.stringify(json.ig)}</div>
+        <div></div>
         <h3>Facebook Data </h3>
-        <div>{JSON.stringify(json.fb)}</div>
+        <div></div>
 
+        <button onClick={showStateData}>Log State Data</button>
 
         <div>
           <h3>Connect to Youtube</h3>
