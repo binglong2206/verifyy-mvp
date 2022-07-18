@@ -9,15 +9,15 @@ interface User {
 
 interface YT_details {
   id: number
-  subscriber_count: number,
-  upload_count: number,
+  follower_count: number,
+  media_count: number,
   demographics: any,
   geographics: any,
   medias: any,
 }
 
 interface Youtube extends YT_details {
-  setYoutubeState: ({id,subscriber_count,upload_count,demographics,geographics,medias}: YT_details) => void
+  setYoutubeState: ({id,follower_count,media_count,demographics,geographics,medias}: YT_details) => void
 }
 
 interface IG_details {
@@ -73,8 +73,8 @@ interface Dog {
 
 export const useYoutubeStore = create<Youtube>()((set)=> ({
   id: 0,
-  subscriber_count: 0,
-  upload_count: 0,
+  follower_count: 0,
+  media_count: 0,
   demographics: null,
   geographics: null,
   medias: null,
@@ -84,7 +84,8 @@ export const useYoutubeStore = create<Youtube>()((set)=> ({
       set({
         [key]: props[key as keyof YT_details] // woohoo!
       })
-    }
+    };
+
   },
 
 }))

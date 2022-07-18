@@ -42,7 +42,6 @@ export default async function handler(
   )
     .then((r) => r.json())
     .catch((e) => console.error(e));
-  console.log(pageList);
   const pageId = pageList.data[0].id; // Glory Trading Page
 
   // Get followers & likes, fan_count -> likes

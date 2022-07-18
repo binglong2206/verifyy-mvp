@@ -62,7 +62,7 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
 
         <button onClick={logout}>Logout</button>
         <h3>Youtube Data: </h3>
-        <div>{youtubeState.upload_count}</div>
+        <div>{youtubeState.media_count}</div>
         <h3>Instagram Data </h3>
         <div></div>
         <h3>Facebook Data </h3>

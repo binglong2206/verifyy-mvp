@@ -28,7 +28,7 @@ const Login: NextPage = () => {
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(state);
+
     dispatch({ [name]: value });
   };
 

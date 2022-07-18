@@ -27,9 +27,9 @@ interface VideoStat {
 }
 
 interface YT_data {
-  subscriber_count: number;
+  follower_count: number;
   view_count: number;
-  upload_count: number;
+  media_count: number;
   demographics: [string, string, number][];
   geographics: [string, number][];
   medias: {
@@ -107,16 +107,36 @@ export default async function handler(
 
   // Youtube Analytics API -> Geographics (Country by views)
   const geographics = await fetch(
-    `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=country&startDate=2000-05-01&endDate=${formattedDate}&ids=channel==MINE&metrics=views,estimatedMinutesWatched,averageViewDuration,averageViewPercentage,subscribersGained&sort=-views&access_token=${yt_accessToken}`
+    `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=country&startDate=2000-05-01&endDate=${formattedDate}&ids=channel==MINE&metrics=views&sort=-views&access_token=${yt_accessToken}`
   ).then((r) => r.json());
 
   // Organize all data into single object
   const organized_data: YT_data = {
-    subscriber_count: subscriberCount,
+    follower_count: subscriberCount,
     view_count: viewCount,
-    upload_count: viewCount,
-    demographics: demographics.rows,
-    geographics: geographics.rows,
+    media_count: viewCount,
+    demographics: ( [
+      ["age18-24", "female", 1.3],
+      ["age25-34", "female", 0.3],
+      ["age35-44", "female", 0],
+      ["age55-64", "female", 0.1],
+      ["age13-17", "male", 0.1],
+      ["age18-24", "male", 59.2],
+      ["age25-34", "male", 36.3],
+      ["age35-44", "male", 2.2],
+      ["age45-54", "male", 0.4],
+      ["age55-64", "male", 0.2],
+      ["age65-", "male", 0.1]
+    ]),           // demographics.rows
+    geographics: (
+      [
+        ["JP", 40109],
+        ["KR", 35181],
+        ["US", 23599],
+        ["PH", 6743],
+        ["TH", 5831],
+        ["ID", 5148],]
+    ),                 //geographics.rows
     medias: videoObjects,
   };
 
