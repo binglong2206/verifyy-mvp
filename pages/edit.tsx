@@ -39,13 +39,13 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
         .then((res) => res.json()) 
         .then((data) => {
           setYoutubeState(data.yt);
-          setInstagramState(data.ig)
-          setFacebookState(data.fb)
+          setInstagramState(data.ig);
+          setFacebookState(data.fb);
         })
         .catch(() => console.log("cannot connect"));
     };
     fetchDashboard();
-  },[])
+  },[id, setYoutubeState, setInstagramState, setFacebookState ])
 
   const showStateData = () => {
     console.log('Youtube', youtubeState);

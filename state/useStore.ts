@@ -13,6 +13,7 @@ interface YT_details {
   media_count: number,
   demographics: any,
   geographics: any,
+  data_intervals: any,
   medias: any,
 }
 
@@ -27,6 +28,7 @@ interface IG_details {
   media_count: number,
   demographics: any[],
   geographics: any[],
+  data_intervals: any,
   medias: any[],
 }
 
@@ -44,6 +46,7 @@ interface FB_details {
   media_count: number,
   demographics: any[],
   geographics: any[],
+  data_intervals: any,
   medias: any[],
 }
 
@@ -67,9 +70,6 @@ export const useUserStore = create<User>()((set) => ({
   },
 }));
 
-interface Dog {
-  cat: number
-}
 
 export const useYoutubeStore = create<Youtube>()((set)=> ({
   id: 0,
@@ -77,6 +77,7 @@ export const useYoutubeStore = create<Youtube>()((set)=> ({
   media_count: 0,
   demographics: null,
   geographics: null,
+  data_intervals: null,
   medias: null,
 
   setYoutubeState: (props: YT_details):void => {
@@ -100,6 +101,7 @@ export const useInstagramStore = create<Instagram>()((set)=> ({
   media_count: 0,
   demographics: [],
   geographics: [],
+  data_intervals:null,
   medias: [],
   setInstagramState: (props: IG_details):void => {
     for (let key in props) {
@@ -117,6 +119,7 @@ export const useFacebookStore = create<Facebook>()((set)=> ({
   media_count: 0,
   demographics: [],
   geographics: [],
+  data_intervals: null,
   medias: [],
   setFacebookState: (props: FB_details) => {
     for (let key in props) {
