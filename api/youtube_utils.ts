@@ -84,17 +84,19 @@ export async function fetchDemoGeo (yt_accessToken: string) {
 
 
 export async function fetchIntervalData (yt_accessToken: string) {
-    let day = new Date(), week = new Date(), month = new Date()
+    let day = new Date(), prevDay = new Date(), week = new Date(), month = new Date()
+    prevDay.setDate(week.getDate()-3)
     week.setDate(week.getDate()-9)
     month.setDate(month.getDate()-31)
     const dayFormat = date.format(day, "YYYY-MM-DD");
+    const prevDayFormat = date.format(prevDay, "YYYY-MM-DD");
     const weekFormat = date.format(week, "YYYY-MM-DD");
     const monthFormat = date.format(month, "YYYY-MM-DD");
 
     const data_intervals: IntervalData = {day: [],week: [],month: []}
 
     const dailyData = await fetch(
-        `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day&startDate=${dayFormat}&endDate=${dayFormat}&ids=channel==MINE&metrics=views,likes,subscribersGained&sort=day&access_token=${yt_accessToken}`
+        `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day&startDate=${prevDayFormat}&endDate=${dayFormat}&ids=channel==MINE&metrics=views,likes,subscribersGained&sort=day&access_token=${yt_accessToken}`
       ).then((r) => r.json()).then(json => data_intervals.day = json.rows);
 
     const weeklyData = await fetch(
@@ -105,9 +107,8 @@ export async function fetchIntervalData (yt_accessToken: string) {
         `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day&startDate=${monthFormat}&endDate=${dayFormat}&ids=channel==MINE&metrics=views,likes,subscribersGained&sort=day&access_token=${yt_accessToken}`
       ).then((r) => r.json()).then(json => data_intervals.month = json.rows);
 
-    
 
 
-      return {data_intervals}
+      return data_intervals
 
 }

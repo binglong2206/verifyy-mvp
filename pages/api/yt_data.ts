@@ -127,9 +127,8 @@ export default async function handler(
     const {demographics, geographics} = await fetchDemoGeo(yt_accessToken);
 
     // Youtube Analytics API -> day/week/28 for views, likes, subsGained
-    const {data_intervals } = await fetchIntervalData(yt_accessToken)
-
-
+    const data_intervals  = await fetchIntervalData(yt_accessToken);
+    console.log('YT DATA INTERVALS: ', data_intervals);
 
 
   // Organize all data into single object
@@ -143,19 +142,20 @@ export default async function handler(
     data_intervals: data_intervals,
   };
 
-  // // Post data as json to DB's controller
-  // await fetch("http://localhost:8000/youtube", {
-  //   method: "POST",
-  //   credentials: "include",
-  //   headers: {
-  //     "content-type": "application/json",
-  //     // Send this to backend to verify auth header again
-  //     Authorization: JSON.stringify(req.cookies),
-  //   },
-  //   body: JSON.stringify(organized_data),
-  // })
-  //   .then(() => res.redirect("/redirect_edit"))
-  //   .catch((e) => console.error(e));
+  // Post data as json to DB's controller
+  await fetch("http://localhost:8000/youtube", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "content-type": "application/json",
+      // Send this to backend to verify auth header again
+      Authorization: JSON.stringify(req.cookies),
+    },
+    body: JSON.stringify(organized_data),
+  })
+    .then(() => res.redirect("/redirect_edit"))
+    .catch((e) => console.error(e));
 
-  res.redirect("/redirect_edit");
+
+  // res.redirect("/redirect_edit");
 }

@@ -4,6 +4,12 @@ import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import { rawListeners } from "process";
 
+interface IntervalData { // date, view, likes, subsGained
+  day: [string, number, number, number][]
+  week: [string, number, number, number][]
+  month: [string, number, number, number][]
+}
+
 interface Media {
   media_url: string;
   src_url: string;

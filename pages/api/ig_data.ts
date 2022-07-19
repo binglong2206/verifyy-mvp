@@ -3,13 +3,37 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import { rawListeners } from "process";
+import {fetchIntervalData} from '../../api/instagram_utils'
 
+interface DataPoint {
+  [key: string]: string | number;
+  value: number;
+  end_time: string
+}
+interface IntervalData { // {date, followers | impressions | reach}
+  day: {
+    follower_count: DataPoint[];
+    impression_count: DataPoint[];
+    reach_count: DataPoint[]
+  }
+  week: {
+    follower_count: DataPoint[];
+    impression_count: DataPoint[];
+    reach_count: DataPoint[]
+  }  
+  month: {
+    follower_count: DataPoint[];
+    impression_count: DataPoint[];
+    reach_count: DataPoint[]
+  }
+}
 interface IG_data {
   username: string;
   follower_count: number;
   media_count: number;
   demographics: any; // refer to ig_demo_geo.json
   geographics: any; // refer to ig_demo_geo.json
+  data_intervals: IntervalData
   medias: {
     id: string;
     like_count: number;
@@ -66,6 +90,12 @@ export default async function handler(
   const demographics = agg_demographics_geographics.data[0].values[0].value;
   const geographics = agg_demographics_geographics.data[1].values[0].value;
 
+
+
+  // // Get Intervals Data -> day,week,28days for views,impressions,reach
+  const {data_intervals} = await fetchIntervalData(instagramId, accessToken);
+
+
   const organized_data: IG_data = {
     username: username,
     follower_count: followers_count,
@@ -73,8 +103,9 @@ export default async function handler(
     demographics: demographics,
     geographics: geographics,
     medias: medias,
+    data_intervals: data_intervals,
   };
-  // console.log('ORGANIZED IG DATA: ', organized_data)
+
 
   // Post DB to let controller insert, redirect to edit to then query inserted data
   await fetch("http://localhost:8000/instagram", {
@@ -86,5 +117,6 @@ export default async function handler(
     },
     body: JSON.stringify(organized_data),
   }).then(() => res.redirect("/redirect_edit"));
+
   // res.redirect("/redirect_edit");
 }
