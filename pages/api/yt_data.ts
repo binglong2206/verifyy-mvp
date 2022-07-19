@@ -27,12 +27,19 @@ interface VideoStat {
   player: any;
 }
 
+interface IntervalData { // date, view, likes, subsGained
+  day: [string, number, number, number][]
+  week: [string, number, number, number][]
+  month: [string, number, number, number][]
+}
+
 interface YT_data {
   follower_count: number;
   view_count: number;
   media_count: number;
   demographics: [string, string, number][];
   geographics: [string, number][];
+  data_intervals: IntervalData;
   medias: {
     title: string;
     view_count: number;
@@ -113,13 +120,15 @@ export default async function handler(
 
 
 
+    // Youtube Data API -> lifetime basic stats, and latest 5 videos stat
     const {viewCount, subscriberCount, videoCount, videoObjects} = await fetchBasicStat(yt_accessToken);
+
+    // Youtube Analytics API -> lifetime demographcis & geographics
     const {demographics, geographics} = await fetchDemoGeo(yt_accessToken);
-    const {views_interval, likes_interval, }
 
+    // Youtube Analytics API -> day/week/28 for views, likes, subsGained
+    const {data_intervals } = await fetchIntervalData(yt_accessToken)
 
-  // Youtube Analytics API -> day/week/28 for engagement, media_count, & follower_count
-  await fetchIntervalData(yt_accessToken);
 
 
 
@@ -131,6 +140,7 @@ export default async function handler(
     demographics: demographics,         
     geographics: geographics,                 
     medias: videoObjects,
+    data_intervals: data_intervals,
   };
 
   // // Post data as json to DB's controller

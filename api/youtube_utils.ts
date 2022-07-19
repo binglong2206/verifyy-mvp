@@ -20,6 +20,13 @@ interface PlaylistItem {
     player: any;
   }
 
+
+  interface IntervalData { // date, view, likes, subsGained
+    day: [string, number, number, number][]
+    week: [string, number, number, number][]
+    month: [string, number, number, number][]
+  }
+
 export async function fetchBasicStat (yt_accessToken: string) {
 
     // Youtube Data API -> views, subscribers, uploads
@@ -84,59 +91,23 @@ export async function fetchIntervalData (yt_accessToken: string) {
     const weekFormat = date.format(week, "YYYY-MM-DD");
     const monthFormat = date.format(month, "YYYY-MM-DD");
 
-    const views_interval = {
-        day: [],
-        week: [],
-        month: []
-    }
-    const views_day = await fetch(
-        `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day&startDate=${dayFormat}&endDate=${dayFormat}&ids=channel==MINE&metrics=views&sort=day&access_token=${yt_accessToken}`
-      ).then((r) => r.json()).then(json => views_interval.day = json.rows);
+    const data_intervals: IntervalData = {day: [],week: [],month: []}
 
-    const views_week = await fetch(
-        `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day&startDate=${weekFormat}&endDate=${dayFormat}&ids=channel==MINE&metrics=views&sort=day&access_token=${yt_accessToken}`
-      ).then((r) => r.json()).then(json => views_interval.week = json.rows)
+    const dailyData = await fetch(
+        `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day&startDate=${dayFormat}&endDate=${dayFormat}&ids=channel==MINE&metrics=views,likes,subscribersGained&sort=day&access_token=${yt_accessToken}`
+      ).then((r) => r.json()).then(json => data_intervals.day = json.rows);
 
-    const views_month = await fetch(
-        `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day&startDate=${monthFormat}&endDate=${dayFormat}&ids=channel==MINE&metrics=views&sort=day&access_token=${yt_accessToken}`
-      ).then((r) => r.json()).then(json => views_interval.month = json.rows);
+    const weeklyData = await fetch(
+        `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day&startDate=${weekFormat}&endDate=${dayFormat}&ids=channel==MINE&metrics=views,likes,subscribersGained&sort=day&access_token=${yt_accessToken}`
+      ).then((r) => r.json()).then(json => data_intervals.week = json.rows)
 
-    const likes_interval = {
-        day: [],
-        week: [],
-        month: []
-    }
-    const likes_day = await fetch(
-        `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day&startDate=${dayFormat}&endDate=${dayFormat}&ids=channel==MINE&metrics=likes&sort=day&access_token=${yt_accessToken}`
-      ).then((r) => r.json()).then(json => likes_interval.day = json.rows);
+    const monthlyData = await fetch(
+        `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day&startDate=${monthFormat}&endDate=${dayFormat}&ids=channel==MINE&metrics=views,likes,subscribersGained&sort=day&access_token=${yt_accessToken}`
+      ).then((r) => r.json()).then(json => data_intervals.month = json.rows);
 
-    const likes_week = await fetch(
-        `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day&startDate=${weekFormat}&endDate=${dayFormat}&ids=channel==MINE&metrics=likes&sort=day&access_token=${yt_accessToken}`
-      ).then((r) => r.json()).then(json => likes_interval.week = json.rows)
-
-    const likes_month = await fetch(
-        `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day&startDate=${monthFormat}&endDate=${dayFormat}&ids=channel==MINE&metrics=likes&sort=day&access_token=${yt_accessToken}`
-      ).then((r) => r.json()).then(json => likes_interval.month = json.rows);
+    
 
 
-      const follower_interval = {
-        day: [],
-        week: [],
-        month: []
-    }
-    const follower_day = await fetch(
-        `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day&startDate=${dayFormat}&endDate=${dayFormat}&ids=channel==MINE&metrics=subscribersGained&sort=day&access_token=${yt_accessToken}`
-      ).then((r) => r.json()).then(json => follower_interval.day = json.rows);
-
-    const follower_week = await fetch(
-        `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day&startDate=${weekFormat}&endDate=${dayFormat}&ids=channel==MINE&metrics=subscribersGained&sort=day&access_token=${yt_accessToken}`
-      ).then((r) => r.json()).then(json => follower_interval.week = json.rows)
-
-    const follower_month = await fetch(
-        `https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day&startDate=${monthFormat}&endDate=${dayFormat}&ids=channel==MINE&metrics=subscribersGained&sort=day&access_token=${yt_accessToken}`
-      ).then((r) => r.json()).then(json => follower_interval.month = json.rows);
-
-
-      return {views_interval, likes_interval, follower_interval}
+      return {data_intervals}
 
 }
