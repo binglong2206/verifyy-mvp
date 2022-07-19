@@ -59,5 +59,5 @@ export async function fetchIntervalData(instagramId: string, accessToken: string
       data_intervals.month.reach_count = json.data[2].values
         });
   
-  return {data_intervals}
+  return data_intervals
 }

@@ -92,8 +92,8 @@ export default async function handler(
 
 
 
-  // // Get Intervals Data -> day,week,28days for views,impressions,reach
-  const {data_intervals} = await fetchIntervalData(instagramId, accessToken);
+  // Get Intervals Data -> day,week,28days for views,impressions,reach
+  const data_intervals = await fetchIntervalData(instagramId, accessToken);
 
 
   const organized_data: IG_data = {

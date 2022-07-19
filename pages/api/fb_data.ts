@@ -3,12 +3,32 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import { rawListeners } from "process";
+import {fetchIntervalData} from '../../api/facebook_utils'
 
-interface IntervalData { // date, view, likes, subsGained
-  day: [string, number, number, number][]
-  week: [string, number, number, number][]
-  month: [string, number, number, number][]
+interface DataPoint { // date, followers | engagement | impressions
+  [key: string]: string | number;
+  end_time: string
+  value: number;
 }
+
+interface IntervalData { 
+  day: {
+    follower_count: DataPoint[];
+    engagement_count: DataPoint[];
+    impression_count: DataPoint[];
+  }
+  week: {
+    follower_count: DataPoint[];
+    engagement_count: DataPoint[]
+    impression_count: DataPoint[];
+  }  
+  month: {
+    follower_count: DataPoint[];
+    engagement_count: DataPoint[]
+    impression_count: DataPoint[];
+  }
+}
+
 
 interface Media {
   media_url: string;
@@ -24,6 +44,7 @@ interface FB_data {
   media_count: number;
   demographics: any; // refer to fb_demo_geo.json
   geographics: any; // refer to fb_demo_geo.json
+  data_intervals: IntervalData;
   medias: Media[];
 }
 
@@ -105,6 +126,11 @@ export default async function handler(
   const demographics = agg_demographics_geographics.data[0].values[0].value;
   const geographics = agg_demographics_geographics.data[1].values[0].value;
 
+
+    // Get Intervals Data -> day,week,28days for views,impressions,reach
+    const data_intervals = await fetchIntervalData(pageId, pageAccessToken);
+
+
   const organized_data: FB_data = {
     follower_count: followers_count,
     like_count: fan_count,
@@ -112,6 +138,7 @@ export default async function handler(
     demographics: demographics,
     geographics: geographics,
     medias: media_list,
+    data_intervals: data_intervals
   };
 
   await fetch("http://localhost:8000/facebook", {

@@ -128,7 +128,6 @@ export default async function handler(
 
     // Youtube Analytics API -> day/week/28 for views, likes, subsGained
     const data_intervals  = await fetchIntervalData(yt_accessToken);
-    console.log('YT DATA INTERVALS: ', data_intervals);
 
 
   // Organize all data into single object
