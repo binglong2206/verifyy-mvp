@@ -1,11 +1,7 @@
 import type { NextPage, GetServerSidePropsContext } from "next";
-import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import { getCookies } from "cookies-next";
 import React, { useEffect, useState, useReducer } from "react";
-import Router from "next/router";
-import { loginFormReducer } from "../utils/formReducer";
+
 const axios = require("axios").default;
 
 interface signUpForm {
