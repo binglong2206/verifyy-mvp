@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { motion, MotionStyle } from 'framer-motion';
-import Brand from '../Brand/Brand';
+import Brand from './Brand';
 import Navigation, { NavigationLine } from '../Navigation/Navigation';
 import User from '../User/User';
 import { dashboardMenu, layoutMenu } from '../../menu';

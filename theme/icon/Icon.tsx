@@ -5,8 +5,20 @@ import * as SvgIcon from './svg-icons';
 import * as Bootstrap from './bootstrap';
 import * as Material from './material-icons';
 import pascalcase from 'pascalcase';
-import { TColor } from '../../type/color';
-import { TIcons } from '../../type/icons';
+import { TMaterialIcons } from '../../types/icon/material-icons';
+import { TBootstrapIcons } from '../../types/icon/bootstrap-icons';
+import { TSvgIcons } from '../../types/icon/svg-icons';
+
+type IconTypes = TMaterialIcons | TBootstrapIcons | TSvgIcons | string;
+type ColorTypes =
+	| 'primary'
+	| 'secondary'
+	| 'success'
+	| 'info'
+	| 'warning'
+	| 'danger'
+	| 'light'
+	| 'dark';
 
 interface IRefWrapperProps extends Record<string, any> {
 	children: ReactNode;
@@ -24,9 +36,9 @@ const RefWrapper = forwardRef<HTMLSpanElement, IRefWrapperProps>(({ children }, 
 });
 
 interface IIconProps extends HTMLAttributes<HTMLSpanElement> {
-	icon?: TIcons;
+	icon?: IconTypes;
 	className?: string;
-	color?: TColor;
+	color?: ColorTypes;
 	size?:
 		| null
 		| 'sm'
@@ -112,42 +124,5 @@ const Icon = forwardRef<HTMLSpanElement, IIconProps>(
 		return null;
 	},
 );
-Icon.propTypes = {
-	icon: PropTypes.string.isRequired,
-	className: PropTypes.string,
-	color: PropTypes.oneOf([
-		null,
-		'primary',
-		'secondary',
-		'success',
-		'info',
-		'warning',
-		'danger',
-		'light',
-		'dark',
-	]),
-	size: PropTypes.oneOf([
-		null,
-		'sm',
-		'md',
-		'lg',
-		'2x',
-		'3x',
-		'4x',
-		'5x',
-		'6x',
-		'7x',
-		'8x',
-		'9x',
-		'10x',
-	]),
-	forceFamily: PropTypes.oneOf([null, 'custom', 'bootstrap', 'material']),
-};
-Icon.defaultProps = {
-	className: undefined,
-	color: undefined,
-	size: null,
-	forceFamily: null,
-};
 
 export default memo(Icon);
