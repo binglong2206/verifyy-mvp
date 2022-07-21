@@ -6,7 +6,6 @@ interface User {
   setUserState: (email: string, username?: string) => void;
 }
 
-
 interface YT_details {
   id: number
   follower_count: number,
