@@ -13,6 +13,8 @@ const Login: NextPage = () => {
         <Link href={"/edit"}>
           <button>go to App</button>
         </Link>
+        <button type="button" className="btn btn-warning">Warning</button>
+        <div className="mt-5">yo</div>
       </main>
     </div>
   );
