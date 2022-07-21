@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import PropTypes from 'prop-types';
 // import { Link } from 'react-router-dom';
-import Icon from './icon/Icon';
+import Icon from './icons/Icon';
 import Logo from './Logo';
 
 interface IBrandProps {
