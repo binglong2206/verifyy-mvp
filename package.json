@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@omtanke/react-use-event-outside": "^1.0.1",
     "@popperjs/core": "^2.11.5",
     "animate.css": "^4.1.1",
     "axios": "^0.27.2",
