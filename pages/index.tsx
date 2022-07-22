@@ -2,7 +2,6 @@ import type { NextPage, GetServerSidePropsContext } from "next";
 import styles from "../styles/Home.module.css";
 import React, { useEffect, useState, useReducer } from "react";
 import Link from "next/link";
-import SideBar from "../theme/SideBar";
 
 const Login: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -14,8 +13,7 @@ const Login: NextPage = () => {
         <Link href={"/edit"}>
           <button>go to App</button>
         </Link>
-
-        <SideBar />
+        <div className='mt-5'>here</div>
       </main>
     </div>
   );

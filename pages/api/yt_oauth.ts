@@ -24,7 +24,7 @@ export default async function handler(
   let url = "https://accounts.google.com/o/oauth2/v2/auth";
 
   url += `?client_id=${process.env.YT_CLIENT_ID}`;
-  url += "&redirect_uri=http://localhost:3000/api/yt_data";
+  url += "&redirect_uri=http://localhost:8000/youtube/test";
   url += "&response_type=code";
   url +=
     "&scope=https://www.googleapis.com/auth/yt-analytics.readonly https://www.googleapis.com/auth/youtube.readonly";

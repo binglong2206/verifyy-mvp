@@ -25,7 +25,7 @@ export const useThemeStore = create<ThemeTypes>()((set) => ({
 	mobileDesign: false,
 	rightMenuStatus: false,
 	rightPanel: false,
-  setAsideStatus: () => set((state)=> ({asideStatus: !state.asideStatus})),
+  	setAsideStatus: () => set((state)=> ({asideStatus: !state.asideStatus})),
 	setDarkModeStatus: () => set((state)=> ({darkModeStatus: !state.darkModeStatus})),
 	setFullScreenStatus: () => set((state)=> ({fullScreenStatus: !state.fullScreenStatus})),
 	setLeftMenuStatus: () => set((state)=> ({leftMenuStatus: !state.leftMenuStatus})),

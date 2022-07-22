@@ -53,6 +53,26 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
     console.log('Facebook', facebookState)
   };
 
+
+
+  let url = "https://accounts.google.com/o/oauth2/v2/auth";
+
+  url += `?client_id=284320772177-9it3a6skjshvpeu4nvpeknp6nq8ko8h2.apps.googleusercontent.com`;
+  url += "&redirect_uri=http://localhost:8000/oauth/youtube";
+  url += "&response_type=code";
+  url +=
+    "&scope=https://www.googleapis.com/auth/yt-analytics.readonly https://www.googleapis.com/auth/youtube.readonly";
+  url += "&include_granted_scopes=true";
+  url += "&state=" + 'CSRFSTATE';
+
+  url = 'http://localhost:8000/oauth/youtube/redirect'
+
+  const initYoutubeOauth = async () => {
+    Router.push(url)
+  }
+
+
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -66,11 +86,12 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
         <h3>Instagram Data </h3>
         <div></div>
         <h3>Facebook Data </h3>
-        <div></div>
 
         <button onClick={showStateData}>Log State Data</button>
 
         <div>
+        <button onClick={()=>location.href='http://localhost:8000/oauth/youtube/redirect'} type="button">
+         Manually Route to Youtube oauth</button>
           <h3>Connect to Youtube</h3>
           <Link href="/api/yt_oauth">
             <button onClick={() => setLoading(true)}>youtube</button>

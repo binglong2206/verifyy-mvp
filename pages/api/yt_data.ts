@@ -7,25 +7,7 @@ import axios from "axios";
 import date from "date-and-time";
 import {fetchBasicStat,fetchDemoGeo,fetchIntervalData} from '../../api/youtube_utils'
 
-interface PlaylistItem {
-  kind: string;
-  etag: string;
-  id: string;
-  contentDetails: {
-    videoId: string;
-    videoPublishedAt: string;
-  };
-}
 
-interface VideoStat {
-  kind: string;
-  etag: string;
-  id: string;
-  snippet: any;
-  contentDetails: any;
-  statistics: any;
-  player: any;
-}
 
 interface IntervalData { // date, view, likes, subsGained
   day: [string, number, number, number][]
@@ -142,7 +124,7 @@ export default async function handler(
   };
 
   // Post data as json to DB's controller
-  await fetch("http://localhost:8000/youtube", {
+  await fetch("http://localhost:8000/youtube/update", {
     method: "POST",
     credentials: "include",
     headers: {

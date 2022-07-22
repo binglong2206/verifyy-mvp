@@ -73,7 +73,7 @@ const Login: NextPage = () => {
         <Link href="/signup">
           <button>Signup</button>
         </Link>
-      </main>
+      </main> 
     </div>
   );
 };
