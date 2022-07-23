@@ -90,8 +90,15 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
         <button onClick={showStateData}>Log State Data</button>
 
         <div>
-        <button onClick={()=>location.href='http://localhost:8000/oauth/youtube/redirect'} type="button">
+        <button onClick={()=>location.href='http://localhost:8000/youtube/redirect'} type="button">
          Manually Route to Youtube oauth</button>
+         <button onClick={()=>location.href='http://localhost:8000/instagram/redirect'} type="button">
+         Manually Route to Instagram oauth</button>
+         <button onClick={()=>location.href='http://localhost:8000/facebook/redirect'} type="button">
+         Manually Route to Facebook oauth</button>
+
+
+
           <h3>Connect to Youtube</h3>
           <Link href="/api/yt_oauth">
             <button onClick={() => setLoading(true)}>youtube</button>
@@ -107,7 +114,7 @@ const Home: NextPage<HomeProps> = ({ id, username }) => {
           <h3>TikTok coming soon....</h3>
           <Link href="/api/fb_oauth">
             <button disabled={true}>instagram</button>
-          </Link>
+          </Link> 
           <div>{loading ? <h1>loading...</h1> : null}</div>
         </div>
       </main>

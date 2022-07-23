@@ -84,7 +84,6 @@ export default async function handler(
   )
     .then((r) => r.json())
     .then((json) => json.access_token)
-    .catch((e) => console.error(e));
 
   // Get 5 recent post lists, along with summary total posts count
   const post_list = await fetch(
@@ -92,6 +91,7 @@ export default async function handler(
   )
     .then((r) => r.json())
     .catch((e) => console.error(e));
+
   const media_count = post_list.summary.total_count;
   const postIds = post_list.data.map((e: { id: string }) => {
     return e.id;

@@ -10,9 +10,7 @@ export default async function handler(
 ) {
   const { accessToken, refreshToken } = req.cookies;
 
-  const csrfState = Math.random().toString(36).substring(2);
   res.setHeader("Set-Cookie", [
-    cookie.serialize("fb_csrf", csrfState, { maxAge: 300 }),
     cookie.serialize("web_accessToken", accessToken as string, {
       maxAge: 300,
     }),
@@ -28,6 +26,6 @@ export default async function handler(
   url += "&response_type=code";
   url +=
     "&scope=pages_show_list,pages_read_engagement,pages_read_user_content,read_insights";
-  // url += "&state=" + csrfState;
+    
   res.redirect(url);
 }

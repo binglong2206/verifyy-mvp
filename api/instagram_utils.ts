@@ -50,6 +50,7 @@ export async function fetchIntervalData(instagramId: string, accessToken: string
       data_intervals.week.impression_count = json.data[1].values
       data_intervals.week.reach_count = json.data[2].values
       });
+      console.log('CLIENT TIESTAMP', timestamp.now())
 
   const monthly_data = await fetch(
         `https://graph.facebook.com/v14.0/${instagramId}/insights?metric=follower_count,impressions,reach&period=day&since=${timestamp.now('-28d')}&until=${timestamp.now()}&access_token=${accessToken}`)

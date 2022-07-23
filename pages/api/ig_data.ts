@@ -47,9 +47,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // Get Code, AccessToken
+  // Get Code
   const code = req.url?.split("code=")[1];
 
+  // Get Access Token
   const accessToken = await fetch(
     `https://graph.facebook.com/v14.0/oauth/access_token?client_id=${process.env.FB_CLIENT_ID}&redirect_uri=http://localhost:3000/api/ig_data&client_secret=${process.env.FB_CLIENT_SECRET}&code=${code}` // redirect & resume at this point
   )
@@ -86,7 +87,6 @@ export default async function handler(
     `https://graph.facebook.com/v14.0/${instagramId}/insights?metric=audience_gender_age,audience_country&period=lifetime&access_token=${accessToken}`
   )
     .then((r) => r.json())
-    .catch((e) => console.error(e));
   const demographics = agg_demographics_geographics.data[0].values[0].value;
   const geographics = agg_demographics_geographics.data[1].values[0].value;
 
@@ -108,7 +108,7 @@ export default async function handler(
 
 
   // Post DB to let controller insert, redirect to edit to then query inserted data
-  await fetch("http://localhost:8000/instagram", {
+  await fetch("http://localhost:8000/instagram/update", {
     method: "POST",
     credentials: "include",
     headers: {

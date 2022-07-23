@@ -10,9 +10,7 @@ export default async function handler(
 ) {
   const { accessToken, refreshToken } = req.cookies;
 
-  const csrfState = Math.random().toString(36).substring(2);
   res.setHeader("Set-Cookie", [
-    cookie.serialize("ig_csrf", csrfState, { maxAge: 30 }),
     cookie.serialize("web_accessToken", accessToken as string, {
       maxAge: 30,
     }),
@@ -28,7 +26,6 @@ export default async function handler(
   url += "&response_type=code";
   url +=
     "&scope=instagram_basic,pages_show_list,instagram_manage_insights,read_insights";
-  // url += "&state=" + csrfState;
 
   res.redirect(url);
 }
